@@ -189,7 +189,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.767"
-        app:srcCompat="@drawable/img6" />
+        app:srcCompat="@drawable/img6"
+        android:importantForAccessibility="no" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -200,7 +201,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.682"
-        app:srcCompat="@drawable/img4" />
+        app:srcCompat="@drawable/img4"
+        android:importantForAccessibility="no" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -212,5 +214,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.681"
-        app:srcCompat="@drawable/img5" />
+        app:srcCompat="@drawable/img5"
+        android:importantForAccessibility="no" />
 </androidx.constraintlayout.widget.ConstraintLayout>

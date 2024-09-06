@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AboutUs"
+    tools:context=".Events"
     android:background="@drawable/home">
 
     <ImageView
-        android:id="@+id/about_adminDashboard"
+        android:id="@+id/event_adminDashboard"
         android:layout_width="70dp"
         android:layout_height="59dp"
         android:importantForAccessibility="no"
@@ -22,72 +22,72 @@
         tools:ignore="ImageContrastCheck" />
 
     <ImageView
-        android:id="@+id/about_homeImg"
+        android:id="@+id/event_homeImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintTop_toBottomOf="@+id/event_divider"
         app:layout_constraintVertical_bias="0.567"
         app:srcCompat="@drawable/baseline_home_24"
         android:importantForAccessibility="no" />
 
     <ImageView
-        android:id="@+id/about_donationImg"
+        android:id="@+id/event_donationImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.235"
-        app:layout_constraintStart_toEndOf="@+id/about_aboutUsImg"
-        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintStart_toEndOf="@+id/event_aboutUsImg"
+        app:layout_constraintTop_toBottomOf="@+id/event_divider"
         app:layout_constraintVertical_bias="0.567"
         app:srcCompat="@drawable/baseline_attach_money_24"
         android:importantForAccessibility="no" />
 
     <ImageView
-        android:id="@+id/about_aboutUsImg"
+        android:id="@+id/event_aboutUsImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toEndOf="@+id/about_homeImg"
-        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintStart_toEndOf="@+id/event_homeImg"
+        app:layout_constraintTop_toBottomOf="@+id/event_divider"
         app:layout_constraintVertical_bias="0.567"
         app:srcCompat="@drawable/baseline_info_24"
         android:importantForAccessibility="no" />
 
     <ImageView
-        android:id="@+id/about_loginoutImg"
+        android:id="@+id/event_loginoutImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.718"
-        app:layout_constraintStart_toEndOf="@+id/about_eventsImg"
-        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintStart_toEndOf="@+id/event_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/event_divider"
         app:layout_constraintVertical_bias="0.567"
         app:srcCompat="@drawable/baseline_login_24"
         android:importantForAccessibility="no" />
 
     <ImageView
-        android:id="@+id/about_eventsImg"
+        android:id="@+id/event_eventsImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.335"
-        app:layout_constraintStart_toEndOf="@+id/about_donationImg"
-        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintStart_toEndOf="@+id/event_donationImg"
+        app:layout_constraintTop_toBottomOf="@+id/event_divider"
         app:layout_constraintVertical_bias="0.567"
         app:srcCompat="@drawable/baseline_event_24"
         android:importantForAccessibility="no" />
 
     <View
-        android:id="@+id/about_divider"
+        android:id="@+id/event_divider"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
