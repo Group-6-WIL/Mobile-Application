@@ -113,27 +113,30 @@
 
     <ImageView
         android:id="@+id/home_ladybirdname"
-        android:layout_width="461dp"
-        android:layout_height="619dp"
-        android:layout_marginTop="156dp"
+        android:layout_width="410dp"
+        android:layout_height="458dp"
         android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498"
         app:srcCompat="@drawable/splash"
         tools:ignore="MissingConstraints,VisualLintBounds" />
 
     <ImageView
         android:id="@+id/home_img2"
-        android:layout_width="117dp"
+        android:layout_width="120dp"
         android:layout_height="112dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/home_img3"
-        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintHorizontal_bias="0.722"
         app:layout_constraintStart_toEndOf="@+id/home_img1"
         app:layout_constraintTop_toBottomOf="@+id/home_TV1"
-        app:layout_constraintVertical_bias="0.039"
-        app:srcCompat="@drawable/img1"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/img1" />
 
     <ImageView
         android:id="@+id/home_img1"
@@ -142,10 +145,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_TV1"
-        app:layout_constraintVertical_bias="0.039"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/imag2"
         tools:ignore="ImageContrastCheck" />
 
@@ -153,14 +156,14 @@
         android:id="@+id/home_img3"
         android:layout_width="115dp"
         android:layout_height="111dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_TV1"
-        app:layout_constraintVertical_bias="0.042"
-        app:srcCompat="@drawable/img3"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/img3" />
 
     <ImageView
         android:id="@+id/home_adminDashboard"
@@ -175,4 +178,39 @@
         app:layout_constraintVertical_bias="0.005"
         app:srcCompat="@drawable/willladybughome"
         tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="120dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toTopOf="@+id/home_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.767"
+        app:srcCompat="@drawable/img6" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="120dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.682"
+        app:srcCompat="@drawable/img4" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="120dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.681"
+        app:srcCompat="@drawable/img5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
