@@ -14,10 +14,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/willladybughome"
         tools:ignore="ImageContrastCheck" />
 
@@ -38,53 +38,53 @@
         android:id="@+id/about_donationImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toEndOf="@+id/about_aboutUsImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/baseline_attach_money_24"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_attach_money_24" />
 
     <ImageView
         android:id="@+id/about_aboutUsImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toEndOf="@+id/about_homeImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/baseline_info_24"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_info_24" />
 
     <ImageView
         android:id="@+id/about_loginoutImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.718"
+        app:layout_constraintHorizontal_bias="0.724"
         app:layout_constraintStart_toEndOf="@+id/about_eventsImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/baseline_login_24"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_login_24" />
 
     <ImageView
         android:id="@+id/about_eventsImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.335"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toEndOf="@+id/about_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/baseline_event_24"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_event_24" />
 
     <View
         android:id="@+id/about_divider"
@@ -97,5 +97,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.897" />
+
+    <ImageView
+        android:id="@+id/about_locationImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/about_eventsImg"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toEndOf="@+id/about_donationImg"
+        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_share_location_24" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

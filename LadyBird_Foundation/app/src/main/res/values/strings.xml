@@ -17,4 +17,11 @@
     <string name="main_lady">LADY</string>
     <string name="raising_funds_and_donating_to_others_who_are_in_need_this_will_have_all_the_information_about_our_website_and_what_we_are_after_right_now_just_filling_in_the_void">Raising Funds and Donating to others who are in need. This will have all the information about our website and what we are after right now just filling in the void</string>
     <string name="the_ladybird_foundation_was_set_up_to_provide_joy_and_relief_to_terminally_critically_or_seriously_ill_children_based_in_the_maltese_islands_funds_collected_will_be_used_to_give_these_children_and_their_families_the_opportunity_sometimes_the_last_opportunity_to_go_on_vacation_together_or_otherwise_spend_quality_time_with_each_other_we_will_try_to_give_children_the_chance_to_turn_their_dreams_into_reality">The Ladybird Foundation was set up to provide joy and relief to terminally, critically or seriously ill children based in the Maltese islands. Funds collected will be used to give these children and their families the opportunity (sometimes the last opportunity) to go on vacation together or otherwise spend quality time with each other. We will try to give children the chance to turn their dreams into reality.</string>
+
+    <string-array name="Page_array">
+        <item>Events</item>
+        <item>Donate</item>
+        <item>Location</item>
+    </string-array>
+
 </resources>
