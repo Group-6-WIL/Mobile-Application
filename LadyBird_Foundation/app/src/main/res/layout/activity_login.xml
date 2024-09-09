@@ -42,23 +42,6 @@
         tools:ignore="TextFields,VisualLintOverlap"
         android:importantForAutofill="no" />
 
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="408dp"
-        android:ems="10"
-        android:hint="@string/register_password"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/login_logBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TextFields" />
-
     <Button
         android:id="@+id/login_logBtn"
         android:layout_width="165dp"
@@ -79,10 +62,9 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@+id/login_login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.53"
         app:srcCompat="@drawable/login" />
 
     <TextView
@@ -114,5 +96,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_notRegsitered"
         app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="@string/register_password"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/login_logBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_email"
+        app:layout_constraintVertical_bias="0.17"
+        tools:ignore="TextFields" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
