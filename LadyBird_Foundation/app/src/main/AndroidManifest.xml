@@ -17,6 +17,15 @@
         android:theme="@style/Theme.LadyBird_Foundation"
         tools:targetApi="31">
         <activity
+            android:name=".Contact_Us"
+            android:exported="false" />
+        <activity
+            android:name=".admincontactus"
+            android:exported="false" />
+        <activity
+            android:name=".adminaboutus"
+            android:exported="false" />
+        <activity
             android:name=".admin_events"
             android:exported="false" />
         <activity
