@@ -21,6 +21,18 @@
         app:srcCompat="@drawable/willladybughome"
         tools:ignore="ImageContrastCheck" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="https://popia.co.za/"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:id="@+id/donate_homeImg"
         android:layout_width="30dp"
@@ -121,7 +133,7 @@
         app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026" />
+        app:layout_constraintVertical_bias="0.071" />
 
     <View
         android:id="@+id/divider"
@@ -129,7 +141,8 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="103dp" />
+        tools:layout_editor_absoluteY="103dp"
+        tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/donate_category_spinner"
@@ -150,7 +163,8 @@
         android:hint="Name"
         android:inputType="text"
         tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="312dp" />
+        tools:layout_editor_absoluteY="312dp"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
@@ -160,7 +174,8 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="379dp" />
+        tools:layout_editor_absoluteY="379dp"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextPhone"
@@ -170,21 +185,24 @@
         android:hint="Phone Number"
         android:inputType="phone"
         tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="440dp" />
+        tools:layout_editor_absoluteY="440dp"
+        tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/donate_location_spinner"
         android:layout_width="300dp"
         android:layout_height="50dp"
         tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="507dp" />
+        tools:layout_editor_absoluteY="507dp"
+        tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/donate_item_spinner"
         android:layout_width="300dp"
         android:layout_height="50dp"
         tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="218dp" />
+        tools:layout_editor_absoluteY="218dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button2"
@@ -193,6 +211,7 @@
         android:backgroundTint="#932020"
         android:text="Send Donation Item Request"
         tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="591dp" />
+        tools:layout_editor_absoluteY="591dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

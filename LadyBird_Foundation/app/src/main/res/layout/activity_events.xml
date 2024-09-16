@@ -21,6 +21,17 @@
         app:srcCompat="@drawable/willladybughome"
         tools:ignore="ImageContrastCheck" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="https://popia.co.za/"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="273dp"
+        tools:layout_editor_absoluteY="16dp" />
+
     <ImageView
         android:id="@+id/events_homeImg"
         android:layout_width="30dp"

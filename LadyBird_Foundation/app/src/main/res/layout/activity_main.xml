@@ -63,4 +63,16 @@
         app:srcCompat="@drawable/lb1"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="https://popia.co.za/"
+        android:textColor="@color/black"
+        android:autoLink="web"
+        android:linksClickable="true"
+        tools:layout_editor_absoluteX="144dp"
+        tools:layout_editor_absoluteY="702dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

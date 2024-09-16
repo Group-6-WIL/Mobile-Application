@@ -38,12 +38,14 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/imageCarousel"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:layout_constraintTop_toBottomOf="@id/textView10"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="376dp"
+        android:layout_height="230dp"
+        app:layout_constraintBottom_toTopOf="@id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textView12" />
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView10"
+        app:layout_constraintVertical_bias="0.76" />
 
     <TextView
         android:id="@+id/textView12"
@@ -57,12 +59,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.574" />
+        app:layout_constraintVertical_bias="0.642" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="336dp"
-        android:layout_height="141dp"
+        android:layout_width="351dp"
+        android:layout_height="95dp"
         android:text="We strive to collect and donate as much as possible for these people who are in need. We do our best to have collection often and collect as much as people are willing to donate. We are so thankful for those who try to help our mission."
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -71,7 +73,19 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.783" />
+        app:layout_constraintVertical_bias="0.815" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="https://popia.co.za/"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="276dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <ImageView
         android:id="@+id/about_homeImg"
