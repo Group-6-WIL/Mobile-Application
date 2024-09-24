@@ -29,9 +29,9 @@
         android:linksClickable="true"
         android:text="https://popia.co.za/"
         android:textColor="@color/black"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <ImageView
         android:id="@+id/donate_homeImg"

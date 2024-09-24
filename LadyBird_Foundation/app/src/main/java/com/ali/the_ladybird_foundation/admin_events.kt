@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
@@ -20,6 +21,9 @@ import java.util.*
 class admin_events : AppCompatActivity() {
 
     private lateinit var addEventsBtn: Button
+    private lateinit var editEventsBtn : Button
+    private lateinit var deleteEventsBtn :Button
+    private lateinit var back : Button
     lateinit var dialog: Dialog
     lateinit var eventImageView: ImageView
     private var imageUri: Uri? = null
@@ -31,9 +35,19 @@ class admin_events : AppCompatActivity() {
         setContentView(R.layout.activity_admin_events)
 
         addEventsBtn = findViewById(R.id.admin_events_addbtn)
+        editEventsBtn = findViewById(R.id.admin_events_editbtn)
+        deleteEventsBtn = findViewById(R.id.admin_events_deletebtn)
+        back = findViewById(R.id.admin_events_admindashboard)
         dialog = Dialog(this)
 
         addEventsBtn.setOnClickListener { AddEvent() }
+        editEventsBtn.setOnClickListener { EditEvent() }
+        deleteEventsBtn.setOnClickListener { DeleteEvent() }
+
+        back.setOnClickListener {
+            val intentback = Intent(this, Admin_Dashboard::class.java)
+            startActivity(intentback)
+        }
     }
 
     private fun AddEvent() {
@@ -83,6 +97,66 @@ class admin_events : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun EditEvent(){
+        dialog.setContentView(R.layout.admineditevent)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+
+        eventImageView = dialog.findViewById(R.id.admin_imageViewE)
+        val eventName = dialog.findViewById<EditText>(R.id.admin_edit_events_eventname)
+        val description = dialog.findViewById<EditText>(R.id.admin_edit_events_eventdescription)
+        dateEditText = dialog.findViewById(R.id.admin_edit_event_eventdate) // Date EditText
+        val uploadImageBtn = dialog.findViewById<Button>(R.id.admin_edit_events_uploadIV)
+        val addBtn = dialog.findViewById<Button>(R.id.admin_edit_events_save)
+
+        // Make the Date EditText non-editable and trigger DatePickerDialog on click
+        dateEditText.isFocusable = false
+        dateEditText.isClickable = true
+        dateEditText.setOnClickListener {
+            showDatePickerDialog()
+        }
+        // Image upload functionality
+        uploadImageBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+
+        // Save event when Add button is clicked
+        addBtn.setOnClickListener {
+            val eventNameStr = eventName.text.toString().trim()
+            val descriptionStr = description.text.toString().trim()
+            val dateStr = dateEditText.text.toString().trim()
+
+            if (eventNameStr.isEmpty() || descriptionStr.isEmpty() || dateStr.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (imageUri != null) {
+                // If image is selected, upload it first and then save event
+                uploadImageToFirebase(eventNameStr, descriptionStr, dateStr)
+            } else {
+                // Save event without image
+                saveEventToDatabase(eventNameStr, descriptionStr, dateStr, null)
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun DeleteEvent(){
+        dialog.setContentView(R.layout.admindeleteevents)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+
+        val selectEvent = findViewById<Spinner>(R.id.admin_delete_event_spinner)
+        val deleteEvent =findViewById<Button>(R.id.admin_delete_event_button)
+
+        deleteEventsBtn.setOnClickListener{
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+
     // Method to show DatePickerDialog
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
@@ -107,8 +181,6 @@ class admin_events : AppCompatActivity() {
 
         datePickerDialog.show()
     }
-
-
 
     private fun uploadImageToFirebase(eventName: String, description: String, date: String) {
         val storageRef = FirebaseStorage.getInstance().reference

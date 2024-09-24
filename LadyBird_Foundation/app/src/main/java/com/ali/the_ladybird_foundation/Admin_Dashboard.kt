@@ -10,6 +10,7 @@ class Admin_Dashboard : AppCompatActivity() {
     private lateinit var locationBtn : ImageView
     private lateinit var eventBtn : ImageView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_dashboard)

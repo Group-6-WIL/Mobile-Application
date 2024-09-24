@@ -125,13 +125,12 @@
         android:id="@+id/admin_location_IV"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_eventsIV"
-        app:layout_constraintVertical_bias="0.701"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444"
         app:srcCompat="@drawable/locations1" />
 
     <ImageView

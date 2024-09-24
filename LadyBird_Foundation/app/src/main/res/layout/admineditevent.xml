@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/home">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:layout_gravity="center">
 
     <EditText
-        android:id="@+id/admin_add_events_eventdescription"
+        android:id="@+id/admin_edit_events_eventdescription"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -27,11 +26,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_add_event_eventdate"
+        app:layout_constraintTop_toBottomOf="@+id/admin_edit_event_eventdate"
         app:layout_constraintVertical_bias="0.091" />
 
     <Button
-        android:id="@+id/admin_add_events_save"
+        android:id="@+id/admin_edit_events_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#932020"
@@ -40,11 +39,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_add_events_eventdescription"
+        app:layout_constraintTop_toBottomOf="@+id/admin_edit_events_eventdescription"
         app:layout_constraintVertical_bias="0.684" />
 
     <EditText
-        android:id="@+id/admin_add_events_eventname"
+        android:id="@+id/admin_edit_events_eventname"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -54,11 +53,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_add_events_uploadIV"
+        app:layout_constraintTop_toBottomOf="@+id/admin_edit_events_uploadIV"
         app:layout_constraintVertical_bias="0.023" />
 
     <EditText
-        android:id="@+id/admin_add_event_eventdate"
+        android:id="@+id/admin_edit_event_eventdate"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:ems="10"
@@ -68,11 +67,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_add_events_eventname"
+        app:layout_constraintTop_toBottomOf="@+id/admin_edit_events_eventname"
         app:layout_constraintVertical_bias="0.056" />
 
     <ImageView
-        android:id="@+id/admin_imageView"
+        android:id="@+id/admin_imageViewE"
         android:layout_width="134dp"
         android:layout_height="131dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +83,7 @@
         app:srcCompat="@drawable/baseline_event_24" />
 
     <Button
-        android:id="@+id/admin_add_events_uploadIV"
+        android:id="@+id/admin_edit_events_uploadIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#932020"
@@ -94,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_imageView"
+        app:layout_constraintTop_toBottomOf="@+id/admin_imageViewE"
         app:layout_constraintVertical_bias="0.021" />
 
     <Spinner
@@ -104,7 +103,7 @@
         android:layout_marginStart="46dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/admin_imageView"
+        app:layout_constraintBottom_toTopOf="@+id/admin_imageViewE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
