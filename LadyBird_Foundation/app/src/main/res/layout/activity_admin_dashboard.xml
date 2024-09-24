@@ -98,7 +98,7 @@
         app:layout_constraintVertical_bias="0.897" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/admin_eventsIV"
         android:layout_width="160dp"
         android:layout_height="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -125,13 +125,13 @@
         android:id="@+id/admin_location_IV"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:layout_constraintVertical_bias="0.056"
+        app:layout_constraintTop_toBottomOf="@+id/admin_eventsIV"
+        app:layout_constraintVertical_bias="0.701"
         app:srcCompat="@drawable/locations1" />
 
     <ImageView
