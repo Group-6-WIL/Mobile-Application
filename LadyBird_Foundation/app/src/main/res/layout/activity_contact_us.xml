@@ -8,6 +8,7 @@
     android:background="@drawable/home">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
@@ -18,4 +19,91 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/contact_homeImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.567"
+        app:srcCompat="@drawable/baseline_home_24" />
+
+    <ImageView
+        android:id="@+id/contact_donationImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.149"
+        app:layout_constraintStart_toEndOf="@+id/contact_aboutUsImg"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:srcCompat="@drawable/baseline_attach_money_24" />
+
+    <ImageView
+        android:id="@+id/contact_locationImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/contact_eventsImg"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toEndOf="@+id/contact_donationImg"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.833"
+        app:srcCompat="@drawable/baseline_share_location_24" />
+
+    <ImageView
+        android:id="@+id/contact_aboutUsImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toEndOf="@+id/contact_homeImg"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.594"
+        app:srcCompat="@drawable/baseline_info_24" />
+
+    <ImageView
+        android:id="@+id/contact_loginoutImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.655"
+        app:layout_constraintStart_toEndOf="@+id/contact_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:srcCompat="@drawable/baseline_login_24" />
+
+    <ImageView
+        android:id="@+id/contact_eventsImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@+id/contact_donationImg"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.615"
+        app:srcCompat="@drawable/baseline_event_24" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.915"
+        tools:layout_editor_absoluteX="1dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

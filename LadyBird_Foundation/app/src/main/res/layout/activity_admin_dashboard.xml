@@ -134,7 +134,7 @@
         app:srcCompat="@drawable/locations1" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/admin_dashboard_contactUs"
         android:layout_width="160dp"
         android:layout_height="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
