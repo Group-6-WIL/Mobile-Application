@@ -29,9 +29,13 @@
         android:linksClickable="true"
         android:text="https://popia.co.za/"
         android:textColor="@color/black"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintStart_toEndOf="@+id/donate_adminDashboard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/donate_homeImg"
@@ -140,8 +144,12 @@
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="103dp"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.03"
         tools:ignore="MissingConstraints" />
 
     <Spinner
@@ -162,8 +170,12 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="text"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="312dp"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintVertical_bias="0.034"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -173,8 +185,12 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="379dp"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donate_item_spinner"
+        app:layout_constraintVertical_bias="0.167"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -184,24 +200,36 @@
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="phone"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="440dp"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
+        app:layout_constraintVertical_bias="0.068"
         tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/donate_location_spinner"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="507dp"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
+        app:layout_constraintVertical_bias="0.078"
         tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/donate_item_spinner"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="218dp"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donate_category_spinner"
+        app:layout_constraintVertical_bias="0.02"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -209,9 +237,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#932020"
-        android:text="Send Donation Item Request"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="591dp"
+        android:text="Send Donation Email"
+        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donate_location_spinner"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ class Home : AppCompatActivity() {
     private lateinit var homeBtn: ImageView
     private lateinit var aboutBtn: ImageView
     private lateinit var donateBtn: ImageView
+    private lateinit var locationBtn : ImageView
     private lateinit var eventsBtn: ImageView
     private lateinit var loginBtn: ImageView
     private lateinit var ladybirdIcon: ImageView
@@ -30,6 +31,7 @@ class Home : AppCompatActivity() {
         homeBtn = findViewById(R.id.home_homeImg)
         aboutBtn = findViewById(R.id.home_aboutUsImg)
         donateBtn = findViewById(R.id.home_donationImg)
+        locationBtn = findViewById(R.id.home_locationImg)
         eventsBtn = findViewById(R.id.home_eventsImg)
         loginBtn = findViewById(R.id.home_loginoutImg)
         ladybirdIcon = findViewById(R.id.home_adminDashboard)
@@ -42,6 +44,11 @@ class Home : AppCompatActivity() {
         donateBtn.setOnClickListener {
             val intentDonate = Intent(this, Donate::class.java)
             startActivity(intentDonate)
+        }
+
+        locationBtn.setOnClickListener {
+            val intentLocation = Intent(this, Location::class.java)
+            startActivity(intentLocation)
         }
 
         eventsBtn.setOnClickListener {

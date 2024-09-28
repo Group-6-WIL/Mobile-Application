@@ -29,8 +29,12 @@
         android:linksClickable="true"
         android:text="https://popia.co.za/"
         android:textColor="@color/black"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/events_adminDashboard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
 
     <ImageView
         android:id="@+id/events_homeImg"
@@ -121,57 +125,52 @@
         app:layout_constraintVertical_bias="0.577"
         app:srcCompat="@drawable/baseline_share_location_24" />
 
+    <EditText
+        android:id="@+id/events_datepicker"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="536dp"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/events_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="50dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/events_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/events_datepicker"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105"
+        app:srcCompat="@drawable/baseline_search_24" />
+
     <ScrollView
-        android:layout_width="410dp"
-        android:layout_height="447dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="373dp"
+        android:layout_height="503dp"
         app:layout_constraintBottom_toBottomOf="@+id/events_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/events_datepicker">
 
         <LinearLayout
+            android:id="@+id/events_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
+            android:orientation="vertical"
+            android:padding="16dp" />
     </ScrollView>
 
-    <Spinner
-        android:id="@+id/events_category_spinner"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/events_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.243"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.119" />
 
-    <EditText
-        android:id="@+id/events_datepicker"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:hint="Date"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/events_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.243"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/events_category_spinner"
-        app:layout_constraintVertical_bias="0.031" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="50dp"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toTopOf="@+id/events_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toEndOf="@+id/events_category_spinner"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.178"
-        app:srcCompat="@drawable/baseline_search_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,81 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home"
     tools:context=".admin_events"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="@drawable/home">
+    android:padding="16dp">
 
+    <!-- Event Image -->
     <ImageView
         android:id="@+id/admin_eventsIV"
-        android:layout_width="145dp"
-        android:layout_height="135dp"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="394dp"
+        android:layout_height="191dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Events Banner"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169"
-        app:srcCompat="@drawable/event1" />
+        app:layout_constraintWidth_percent="0.8"
+        app:srcCompat="@drawable/events1" />
 
-    <Button
-        android:id="@+id/admin_events_addbtn"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="#932020"
-        android:text="Add Event"
-        android:textColor="@color/white"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_eventsIV"
-        app:layout_constraintVertical_bias="0.155" />
+    <!-- Add Event Button -->
 
-    <Button
-        android:id="@+id/admin_events_deletebtn"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#932020"
-        android:text="Delete Event"
-        android:textColor="@color/white"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_events_editbtn"
-        app:layout_constraintVertical_bias="0.0" />
+    <!-- Edit Event Button -->
+
+    <!-- Delete Event Button -->
 
     <Button
         android:id="@+id/admin_events_editbtn"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#932020"
+        android:elevation="4dp"
         android:text="Edit Event"
         android:textColor="@color/white"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_events_addbtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/admin_events_addbtn"
+        app:layout_constraintWidth_percent="0.7" />
 
     <Button
         android:id="@+id/admin_events_admindashboard"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:backgroundTint="#932020"
-        android:text="Back to dashboard"
+        android:elevation="4dp"
+        android:text="Back to Dashboard"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin_events_deletebtn"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <Button
+        android:id="@+id/admin_events_addbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="#932020"
+        android:elevation="4dp"
+        android:text="Add Event"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/admin_events_deletebtn" />
+        app:layout_constraintTop_toBottomOf="@id/admin_eventsIV"
+        app:layout_constraintVertical_bias="0.058"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <Button
+        android:id="@+id/admin_events_deletebtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#932020"
+        android:elevation="4dp"
+        android:text="Delete Event"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin_events_editbtn"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <!-- Back to Dashboard Button -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
