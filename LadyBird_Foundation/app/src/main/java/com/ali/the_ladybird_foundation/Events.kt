@@ -1,6 +1,7 @@
 package com.ali.the_ladybird_foundation
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,13 +25,54 @@ class Events : AppCompatActivity() {
     private lateinit var eventsContainer: LinearLayout
     private var allEvents: MutableList<Event> = mutableListOf()
 
+    private lateinit var homeBtn : ImageView
+    private lateinit var aboutUs : ImageView
+    private lateinit var donation : ImageView
+    private lateinit var location : ImageView
+    private lateinit var events : ImageView
+    private lateinit var logout : ImageView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
 
         eventsContainer = findViewById(R.id.events_container)
 
+        homeBtn = findViewById(R.id.events_homeImg)
+        aboutUs = findViewById(R.id.events_aboutUsImg)
+        donation = findViewById(R.id.events_donationImg)
+        location = findViewById(R.id.events_locationImg)
+        events = findViewById(R.id.events_eventsImg)
+        logout = findViewById(R.id.events_loginoutImg)
+
         fetchEvents()
+
+        homeBtn.setOnClickListener {
+            val intentHome = Intent(this, Home::class.java)
+            startActivity(intentHome)
+        }
+        aboutUs.setOnClickListener {
+            val intentAbout = Intent(this, AboutUs::class.java)
+            startActivity(intentAbout)
+        }
+        donation.setOnClickListener {
+            val intentDonate = Intent(this, Donate::class.java)
+            startActivity(intentDonate)
+        }
+        location.setOnClickListener {
+            val intentLocation = Intent(this, Location::class.java)
+            startActivity(intentLocation)
+        }
+        events.setOnClickListener {
+            val intentEvent = Intent(this, Events::class.java)
+            startActivity(intentEvent)
+        }
+
+        logout.setOnClickListener {
+            val intentLogout = Intent(this, Home::class.java)
+            startActivity(intentLogout)
+        }
     }
 
     private fun fetchEvents() {

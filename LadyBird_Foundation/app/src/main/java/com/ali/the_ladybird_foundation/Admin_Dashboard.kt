@@ -146,13 +146,15 @@ class Admin_Dashboard : AppCompatActivity() {
 
             // Reference to the Firebase Realtime Database
             val database = FirebaseDatabase.getInstance().getReference("donationItems")
-            // Generate a unique ID for the donation item
-            val donationId = database.push().key
 
-            // If a donation ID is successfully generated, save the donation item
-            if (donationId != null) {
-                val donationItem = DonationItem(categoryText, itemText)  // Create donation item object
-                database.child(donationId).setValue(donationItem)  // Save to Firebase
+            // Save the item under the respective category
+            val categoryRef = database.child(categoryText)  // Use category as the key
+            val itemId = categoryRef.push().key  // Generate a unique ID for the item
+
+            // If an item ID is successfully generated, save the item
+            if (itemId != null) {
+                val donationItem = DonationItem(itemText)  // Create donation item object (consider modifying the constructor)
+                categoryRef.child(itemId).setValue(donationItem)  // Save to Firebase under the category
 
                     // On successful save, show a success message, clear input fields, and dismiss the dialog
                     .addOnSuccessListener {
@@ -166,13 +168,14 @@ class Admin_Dashboard : AppCompatActivity() {
                         Toast.makeText(this, "Error saving donation item: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             } else {
-                // If donation ID generation failed, show error message
-                Toast.makeText(this, "Failed to generate donation ID", Toast.LENGTH_SHORT).show()
+                // If item ID generation failed, show error message
+                Toast.makeText(this, "Failed to generate item ID", Toast.LENGTH_SHORT).show()
             }
         }
 
         dialog.show()  // Displaying the dialog
     }
+
 
     // Method to add a new location to the Firebase database
     private fun AddLocation() {
@@ -229,7 +232,7 @@ class Admin_Dashboard : AppCompatActivity() {
 
     // Data class representing a donation item in Firebase
     data class DonationItem(
-        val category: String? = "",  // Category of the donation item
+     //   val category: String? = "",  // Category of the donation item
         val item: String? = ""  // Name of the donation item
     )
 
