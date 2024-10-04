@@ -84,23 +84,23 @@ class admin_events : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
-        // Save event when the Add button is clicked
+// Adjust the AddEvent and EditEvent methods to call the new saveImageUrlToDatabase correctly
         addBtn.setOnClickListener {
             val eventNameStr = eventName.text.toString().trim()
             val descriptionStr = description.text.toString().trim()
             val dateStr = dateEditText.text.toString().trim()
 
-            // Validate if all fields are filled
             if (eventNameStr.isEmpty() || descriptionStr.isEmpty() || dateStr.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // If an image is selected, upload it to Firebase, else save event directly
+            // Save event with or without image
             if (imageUri != null) {
                 uploadImageToFirebase(eventNameStr, descriptionStr, dateStr)
             } else {
-                saveEventToDatabase(eventNameStr, descriptionStr, dateStr, null)
+                // Pass null for imageUrl if no image is uploaded
+                saveImageUrlToDatabase(null, eventNameStr, descriptionStr, dateStr)
             }
         }
 
@@ -131,7 +131,7 @@ class admin_events : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
-        // Save event changes when Save button is clicked
+// Adjust the AddEvent and EditEvent methods to call the new saveImageUrlToDatabase correctly
         addBtn.setOnClickListener {
             val eventNameStr = eventName.text.toString().trim()
             val descriptionStr = description.text.toString().trim()
@@ -142,10 +142,12 @@ class admin_events : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Save event with or without image
             if (imageUri != null) {
                 uploadImageToFirebase(eventNameStr, descriptionStr, dateStr)
             } else {
-                saveEventToDatabase(eventNameStr, descriptionStr, dateStr, null)
+                // Pass null for imageUrl if no image is uploaded
+                saveImageUrlToDatabase(null, eventNameStr, descriptionStr, dateStr)
             }
         }
 
@@ -235,22 +237,50 @@ class admin_events : AppCompatActivity() {
         val storageRef = FirebaseStorage.getInstance().reference
         val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
         val fileName = formatter.format(Date())
-        val imageRef = storageRef.child("event_images/$fileName")
+        val imageRef = storageRef.child("event_images/$fileName.jpg")
 
-        imageUri?.let {
-            imageRef.putFile(it).addOnSuccessListener {
-                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val imageUrl = uri.toString()
-                    saveEventToDatabase(eventName, description, date, imageUrl)
+        imageUri?.let { uri ->
+            imageRef.putFile(uri)
+                .addOnSuccessListener {
+                    // Image upload succeeded, now get the download URL
+                    imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                        // Now save the URL to the database
+                        saveImageUrlToDatabase(downloadUri.toString(), eventName, description, date)
+                    }.addOnFailureListener { e ->
+                        // Handle error getting download URL
+                        Toast.makeText(this, "Failed to get image URL. Please try again.", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }.addOnFailureListener {
-                Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { storageError ->
+                    // Handle any errors during the upload
+                    Toast.makeText(this, "Image upload failed. Please try again.", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 
+    // Updated method to save image URL to the database
+    private fun saveImageUrlToDatabase(imageUrl: String?, eventName: String, description: String, date: String) {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("events")
+        val eventId = databaseRef.push().key
+
+        val event = Event(eventId, eventName, description, date, imageUrl)
+
+        eventId?.let {
+            databaseRef.child(it).setValue(event)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Event added successfully!", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss() // Close the dialog
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to save event. Please try again.", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+
+
     // Save event information to Firebase database
-    private fun saveEventToDatabase(eventName: String, description: String, date: String, imageUrl: String?) {
+  /*  private fun saveEventToDatabase(eventName: String, description: String, date: String, imageUrl: String?) {
         val databaseRef = FirebaseDatabase.getInstance().getReference("events")
         val eventId = databaseRef.push().key
 
@@ -266,7 +296,7 @@ class admin_events : AppCompatActivity() {
                 }
             }
         }
-    }
+    }*/
 
     // Handle result of image selection and display the selected image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

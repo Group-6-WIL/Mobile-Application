@@ -2,13 +2,17 @@ package com.ali.the_ladybird_foundation
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -34,15 +38,15 @@ class Events : AppCompatActivity() {
             showDatePicker()
         }
 
-        // Set up search action on the image view
         searchImageView.setOnClickListener {
             val selectedDate = datePickerEditText.text.toString()
             if (selectedDate.isNotEmpty()) {
-                filterEvents(selectedDate)
+                filterevents(selectedDate)  // Pass the selected date
             } else {
                 Toast.makeText(this, "Please select a date.", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         fetchEvents()
     }
@@ -86,24 +90,16 @@ class Events : AppCompatActivity() {
         }, year, month, day).show()
     }
 
-    private fun filterEvents(selectedDate: String) {
-        // Debugging: Log the selected date
-        println("Selected Date for Filtering: $selectedDate")
+    private fun filterevents(query: String?) {
+        eventsContainer.removeAllViews() // Clear the current displayed
 
-        // Check what events exist and their dates
-        allEvents.forEach { event ->
-            println("Event Date: ${event.date}")
+        // Filter  based on the search query matching either name or date
+        allEvents.filter { event ->
+            event.eventName.contains(query ?: "", ignoreCase = true) ||
+                    event.date.contains(query ?: "", ignoreCase = true)
+        }.forEach { event ->
+            addEventCard(event)
         }
-
-        // Filter events based on the selected date
-        val filteredEvents = allEvents.filter { event ->
-            event.date == selectedDate
-        }
-
-        // Debugging: Log the filtered events
-        println("Filtered Events: $filteredEvents")
-
-        displayEvents(filteredEvents)
     }
 
     private fun displayEvents(events: List<Event>) {
@@ -124,21 +120,64 @@ class Events : AppCompatActivity() {
 
         val eventName: TextView = cardView.findViewById(R.id.event_name)
         val eventDate: TextView = cardView.findViewById(R.id.event_date)
-        val eventDescription: TextView = cardView.findViewById(R.id.event_description)
+    val image: ImageView = cardView.findViewById(R.id.ImageView11)
+        val viewDetails: TextView = cardView.findViewById(R.id.viewDetails)
 
         eventName.text = event.eventName
         eventDate.text = event.date
-        eventDescription.text = event.description
+
+        // Log the image URL
+        Log.d("Events", "Image URL: ${event.imageUrl}") // Log the URL before loading it
+        // Load the recipe image using Glide, but check if the Activity is still valid
+        if (!isDestroyed && !isFinishing) { // Ensure the Activity is not destroyed
+            Glide.with(this)
+                .load(event.imageUrl)
+                .placeholder(R.drawable.baseline_downloading_24) // Placeholder image while loading
+                .into(image)
+        } else {
+            Log.e("Events", "Activity is destroyed or finishing, cannot load image")
+        }
+
+        // Set click listener for the card
+        viewDetails.setOnClickListener {
+            displayEventDetails(event)
+        }
 
         eventsContainer.addView(cardView)
     }
-}
 
-// Event data class for holding event information
+    private fun displayEventDetails(event: Event) {
+        eventsContainer.visibility = View.VISIBLE // Ensure the container is visible
+
+        // Clear previous details
+        eventsContainer.removeAllViews()
+
+        // Create a new card view for the event details
+        val detailCardView = LayoutInflater.from(this)
+            .inflate(R.layout.event_detail_card, eventsContainer, false)
+
+        // Set the event detail fields
+        val titleTextView: TextView = detailCardView.findViewById(R.id.detail_title)
+        val dateTextView: TextView = detailCardView.findViewById(R.id.detail_date)
+        val descriptionTextView: TextView = detailCardView.findViewById(R.id.detail_description)
+
+        // Set the values from the event object, including labels
+        titleTextView.text = event.eventName
+        dateTextView.text = "Date: ${event.date}" // Format with label
+        descriptionTextView.text = "Description: ${event.description}" // Format with label
+
+        // Add detail card view to the event details container
+        eventsContainer.addView(detailCardView)
+    }
+
+
+
+
+    // Event data class for holding event information
 data class Event(
     val eventId: String? = null,
     val eventName: String = "",
     val description: String = "",
     val date: String = "", // Ensure this matches the format used in showDatePicker()
     val imageUrl: String? = null // Include this if you plan to display images in the future
-)
+)}

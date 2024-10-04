@@ -21,21 +21,6 @@
         app:srcCompat="@drawable/willladybughome"
         tools:ignore="ImageContrastCheck" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:linksClickable="true"
-        android:text="https://popia.co.za/"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toEndOf="@+id/events_adminDashboard"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
-
     <ImageView
         android:id="@+id/events_homeImg"
         android:layout_width="30dp"
@@ -127,18 +112,18 @@
 
     <EditText
         android:id="@+id/events_datepicker"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="218dp"
+        android:layout_height="51dp"
         android:layout_marginBottom="536dp"
         android:ems="10"
         android:hint="Date"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/events_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.117" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -147,15 +132,16 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@+id/events_divider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.696"
         app:layout_constraintStart_toEndOf="@+id/events_datepicker"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105"
+        app:layout_constraintVertical_bias="0.013"
         app:srcCompat="@drawable/baseline_search_24" />
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="373dp"
-        android:layout_height="503dp"
+        android:layout_width="370dp"
+        android:layout_height="559dp"
         app:layout_constraintBottom_toBottomOf="@+id/events_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -163,14 +149,9 @@
 
         <LinearLayout
             android:id="@+id/events_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="370dp"
+            android:layout_height="559dp"
             android:orientation="vertical"
             android:padding="16dp" />
     </ScrollView>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

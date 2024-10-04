@@ -9,22 +9,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            android:id="@+id/ImageView11"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="recipe_image"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Name"
-            android:textSize="18sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
@@ -33,15 +34,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Event Date"
-            android:textSize="14sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/event_description"
-            android:layout_width="wrap_content"
+            android:id="@+id/viewDetails"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Event Description"
-            android:textSize="14sp" />
+            android:text="View event details"
+            android:gravity="center"
+            android:textColorHint="#8F8E8E"/>
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

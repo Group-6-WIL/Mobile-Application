@@ -23,6 +23,13 @@ class Admin_Dashboard : AppCompatActivity() {
     private lateinit var donateBtn: ImageView
     private lateinit var dialog: Dialog
 
+    private lateinit var homeBtn : ImageView
+    private lateinit var aboutUs : ImageView
+    private lateinit var donation : ImageView
+    private lateinit var location : ImageView
+    private lateinit var events : ImageView
+    private lateinit var logout : ImageView
+
     // This method is called when the activity is first created.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +41,39 @@ class Admin_Dashboard : AppCompatActivity() {
         aboutUsBtn = findViewById(R.id.admin_aboutus_IV)
         contactBtn = findViewById(R.id.admin_dashboard_contactUs)
         donateBtn = findViewById(R.id.admin_dashbaord_donate)
+
+        homeBtn = findViewById(R.id.home_homeImg)
+        aboutUs = findViewById(R.id.home_aboutUsImg)
+        donation = findViewById(R.id.home_donationImg)
+        location = findViewById(R.id.home_locationImg)
+        events = findViewById(R.id.home_eventsImg)
+        logout = findViewById(R.id.home_loginoutImg)
+
+        homeBtn.setOnClickListener {
+            val intentHome = Intent(this, Home::class.java)
+            startActivity(intentHome)
+        }
+       aboutUs.setOnClickListener {
+            val intentAbout = Intent(this, AboutUs::class.java)
+            startActivity(intentAbout)
+        }
+        donation.setOnClickListener {
+            val intentDonate = Intent(this, Donate::class.java)
+            startActivity(intentDonate)
+        }
+        location.setOnClickListener {
+            val intentLocation = Intent(this, Location::class.java)
+            startActivity(intentLocation)
+        }
+        events.setOnClickListener {
+            val intentEvent = Intent(this, Events::class.java)
+            startActivity(intentEvent)
+        }
+
+        logout.setOnClickListener {
+            val intentLogout = Intent(this, Home::class.java)
+            startActivity(intentLogout)
+        }
 
         // Initializing a dialog for pop-up forms (used for adding location, contact info, etc.)
         dialog = Dialog(this)
@@ -160,7 +200,7 @@ class Admin_Dashboard : AppCompatActivity() {
             val googleMapsLink = "https://www.google.com/maps/search/?api=1&query=" + address.replace(" ", "+")
 
             // Create location object with address, address name, and Google Maps link
-            val locationData = Location(address, addressName, googleMapsLink)
+            val locationData = LocationDC(address, addressName, googleMapsLink)
 
             // Generate a unique ID for the location
             val locationId = FirebaseDatabase.getInstance().getReference("locations").push().key
@@ -194,7 +234,7 @@ class Admin_Dashboard : AppCompatActivity() {
     )
 
     // Data class representing a location in Firebase
-    data class Location(
+    data class LocationDC(
         val address: String? = "",  // Address of the location
         val addressName: String? = "",  // Name of the location
         val googleMapsLink: String? = ""  // Google Maps link to the location
