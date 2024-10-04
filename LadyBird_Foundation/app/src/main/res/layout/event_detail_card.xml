@@ -19,7 +19,7 @@
             android:text="EVENT NAME"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="24sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:paddingBottom="8dp" />
@@ -28,7 +28,7 @@
             android:id="@+id/detail_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="25dp"
             android:text="Date: "
             android:paddingBottom="4dp" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description: "
-            android:textSize="15dp"
+            android:textSize="25dp"
             android:paddingBottom="4dp" />
 
 

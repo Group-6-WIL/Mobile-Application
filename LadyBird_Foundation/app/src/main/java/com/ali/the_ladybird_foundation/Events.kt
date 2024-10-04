@@ -22,7 +22,6 @@ import java.util.*
 class Events : AppCompatActivity() {
 
     private lateinit var eventsContainer: LinearLayout
-    private lateinit var datePickerEditText: EditText
     private var allEvents: MutableList<Event> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,23 +29,6 @@ class Events : AppCompatActivity() {
         setContentView(R.layout.activity_events)
 
         eventsContainer = findViewById(R.id.events_container)
-        datePickerEditText = findViewById(R.id.events_datepicker)
-        val searchImageView: ImageView = findViewById(R.id.imageView9)
-
-        // Set up date picker on the EditText field
-        datePickerEditText.setOnClickListener {
-            showDatePicker()
-        }
-
-        searchImageView.setOnClickListener {
-            val selectedDate = datePickerEditText.text.toString()
-            if (selectedDate.isNotEmpty()) {
-                filterevents(selectedDate)  // Pass the selected date
-            } else {
-                Toast.makeText(this, "Please select a date.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
 
         fetchEvents()
     }
@@ -67,6 +49,9 @@ class Events : AppCompatActivity() {
                 // Debugging: Print all fetched events
                 println("Fetched Events: $allEvents")
 
+                // Sort events by date before displaying
+                allEvents.sortBy { it.date }  // Ensure the date is in the format "DD-MM-YYYY"
+
                 // Display all events initially
                 displayEvents(allEvents)
             }
@@ -77,36 +62,12 @@ class Events : AppCompatActivity() {
         })
     }
 
-    private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            // Format the selected date as "DD-MM-YYYY"
-            val selectedDate = String.format("%02d-%02d-%04d", selectedDay, selectedMonth + 1, selectedYear)
-            datePickerEditText.setText(selectedDate)
-        }, year, month, day).show()
-    }
-
-    private fun filterevents(query: String?) {
-        eventsContainer.removeAllViews() // Clear the current displayed
-
-        // Filter  based on the search query matching either name or date
-        allEvents.filter { event ->
-            event.eventName.contains(query ?: "", ignoreCase = true) ||
-                    event.date.contains(query ?: "", ignoreCase = true)
-        }.forEach { event ->
-            addEventCard(event)
-        }
-    }
-
     private fun displayEvents(events: List<Event>) {
         eventsContainer.removeAllViews() // Clear existing views
 
         if (events.isEmpty()) {
-            Toast.makeText(this, "No events found for this date.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No events found.", Toast.LENGTH_SHORT).show()
+            return // Exit early if no events found
         }
 
         for (event in events) {
