@@ -167,12 +167,44 @@ class Donate : AppCompatActivity() {
 
 
     private fun setupLocationSpinner() {
-        // Populate the location spinner with drop locations
-        val locations = listOf("Main Branch", "Downtown Center", "Northside Hub")
-        val locationAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, locations)
-        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        locationSpinner.adapter = locationAdapter
+        // Reference to the Firebase Realtime Database
+        val databaseReference = FirebaseDatabase.getInstance().getReference("locations")
+
+        // Create a list to hold the locations
+        val locations = mutableListOf<String>()
+
+        // Add a ValueEventListener to retrieve data from Firebase
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Clear the list to avoid duplicates
+                locations.clear()
+
+                // Loop through the children of the snapshot to get the location names
+                for (locationSnapshot in snapshot.children) {
+                    // Assume each location is stored as a Map with a "name" key
+                    val locationMap = locationSnapshot.getValue<Map<String, String>>()
+                    if (locationMap != null) {
+                        val locationName = locationMap["address"] // Adjust based on your structure
+                        if (locationName != null) {
+                            locations.add(locationName)
+                        }
+                    }
+                }
+
+                // Create an ArrayAdapter for the spinner with the fetched locations
+                val locationAdapter = ArrayAdapter(this@Donate, android.R.layout.simple_spinner_item, locations)
+                locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                locationSpinner.adapter = locationAdapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle potential errors
+                Log.e("FirebaseError", "Failed to read locations: ${error.message}")
+            }
+        })
     }
+
+
 
     private fun sendDonationEmail() {
         // Collect input values
