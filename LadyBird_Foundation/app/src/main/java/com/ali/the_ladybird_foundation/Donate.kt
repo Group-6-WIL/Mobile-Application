@@ -9,6 +9,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,12 +36,68 @@ class Donate : AppCompatActivity() {
     private lateinit var viewBankingButton: Button
     private lateinit var sendDonationButton: Button
 
+    //nav buttons
+    private lateinit var homeBtn : ImageView
+    private lateinit var aboutUsBtn : ImageView
+    private lateinit var donateBtn : ImageView
+    private lateinit var locationBtn : ImageView
+    private lateinit var eventsBtn : ImageView
+    private lateinit var loginOutBtn : ImageView
+    private lateinit var adminLogin : ImageView
+
     private val categories = mutableListOf<String>()
     private val itemsMap = mutableMapOf<String, List<String>>() // Category to items mapping
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donate)
+
+
+        homeBtn = findViewById(R.id.donate_homeImg)
+        aboutUsBtn = findViewById(R.id.donate_aboutUsImg)
+        donateBtn = findViewById(R.id.donate_donationImg)
+        locationBtn = findViewById(R.id.donate_locationImg)
+        eventsBtn = findViewById(R.id.donate_eventsImg)
+        loginOutBtn = findViewById(R.id.donate_loginoutImg)
+        adminLogin = findViewById(R.id.donate_adminDashboard)
+
+
+
+        homeBtn.setOnClickListener {
+            val intentHome = Intent(this, Home::class.java)
+            startActivity(intentHome)
+        }
+
+        aboutUsBtn.setOnClickListener {
+            val intentAbout = Intent(this, AboutUs::class.java)
+            startActivity(intentAbout)
+        }
+
+        donateBtn.setOnClickListener {
+            val intentDonate = Intent(this, Donate::class.java)
+            startActivity(intentDonate)
+        }
+
+        locationBtn.setOnClickListener {
+            val intentLocation = Intent(this, Location::class.java)
+            startActivity(intentLocation)
+        }
+
+        eventsBtn.setOnClickListener {
+            val intentEvents = Intent(this, Events::class.java)
+            startActivity(intentEvents)
+        }
+
+        adminLogin.setOnClickListener {
+            val intentALogin = Intent(this, Admin_Dashboard::class.java)
+            startActivity(intentALogin)
+        }
+
+        loginOutBtn.setOnClickListener {
+            showLoginLogoutDialog()
+        }
+
+
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -256,4 +314,42 @@ class Donate : AppCompatActivity() {
             Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+
+    private fun showLoginLogoutDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
+        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
+        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
+
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle("Login/Logout")
+        builder.setView(dialogView)
+
+        val alertDialog = builder.create()
+
+        btnConfirm.setOnClickListener {
+            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+            when (selectedRadioButtonId) {
+                R.id.radioLogin -> {
+                    // Navigate to Login Activity
+                    val intentLogin = Intent(this, Login::class.java)
+                    startActivity(intentLogin)
+                }
+                R.id.radioLogout -> {
+                    // Log out the user
+                    FirebaseAuth.getInstance().signOut()
+                    // Redirect to Home or Login activity
+                    Toast.makeText(this, "You have been Succussfully logged out", Toast.LENGTH_SHORT).show()
+                    val intentHome = Intent(this, Home::class.java)
+                    startActivity(intentHome)
+                }
+            }
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+
+
 }

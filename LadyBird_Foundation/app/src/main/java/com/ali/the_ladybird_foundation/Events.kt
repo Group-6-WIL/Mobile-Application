@@ -12,8 +12,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.EditText
+import android.widget.RadioGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -31,6 +34,7 @@ class Events : AppCompatActivity() {
     private lateinit var location : ImageView
     private lateinit var events : ImageView
     private lateinit var logout : ImageView
+    private lateinit var ladybirdIcon: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +49,7 @@ class Events : AppCompatActivity() {
         location = findViewById(R.id.events_locationImg)
         events = findViewById(R.id.events_eventsImg)
         logout = findViewById(R.id.events_loginoutImg)
+        ladybirdIcon = findViewById(R.id.events_adminDashboard)
 
         fetchEvents()
 
@@ -70,9 +75,15 @@ class Events : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            val intentLogout = Intent(this, Home::class.java)
-            startActivity(intentLogout)
+            showLoginLogoutDialog()
         }
+
+        ladybirdIcon.setOnClickListener {
+            val intentAdmin = Intent(this, Admin_Dashboard::class.java)
+            startActivity(intentAdmin)
+        }
+
+
     }
 
     private fun fetchEvents() {
@@ -183,4 +194,45 @@ data class Event(
     val description: String = "",
     val date: String = "", // Ensure this matches the format used in showDatePicker()
     val imageUrl: String? = null // Include this if you plan to display images in the future
-)}
+)
+
+
+
+
+    private fun showLoginLogoutDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
+        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
+        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Login/Logout")
+        builder.setView(dialogView)
+
+        val alertDialog = builder.create()
+
+        btnConfirm.setOnClickListener {
+            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+            when (selectedRadioButtonId) {
+                R.id.radioLogin -> {
+                    // Navigate to Login Activity
+                    val intentLogin = Intent(this, Login::class.java)
+                    startActivity(intentLogin)
+                }
+                R.id.radioLogout -> {
+                    // Log out the user
+                    FirebaseAuth.getInstance().signOut()
+                    // Redirect to Home or Login activity
+                    Toast.makeText(this, "You have been Succussfully logged out", Toast.LENGTH_SHORT).show()
+                    val intentHome = Intent(this, Home::class.java)
+                    startActivity(intentHome)
+                }
+            }
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+
+
+
+}

@@ -1,9 +1,11 @@
 package com.ali.the_ladybird_foundation
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,6 +14,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import java.util.UUID
 
 class Admin_Dashboard : AppCompatActivity() {
 
@@ -29,6 +33,10 @@ class Admin_Dashboard : AppCompatActivity() {
     private lateinit var location : ImageView
     private lateinit var events : ImageView
     private lateinit var logout : ImageView
+
+    private var selectedImageUri: Uri? = null // Variable to hold selected image URI
+    private val REQUEST_CODE_IMAGE_PICK = 100 // Any unique value for your request code
+
 
     // This method is called when the activity is first created.
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +61,7 @@ class Admin_Dashboard : AppCompatActivity() {
             val intentHome = Intent(this, Home::class.java)
             startActivity(intentHome)
         }
-       aboutUs.setOnClickListener {
+        aboutUs.setOnClickListener {
             val intentAbout = Intent(this, AboutUs::class.java)
             startActivity(intentAbout)
         }
@@ -92,7 +100,6 @@ class Admin_Dashboard : AppCompatActivity() {
         aboutUsBtn.setOnClickListener { AboutUs() }  // Calls method to manage About Us section
     }
 
-    // Method to add or edit contact details
     private fun AddContact() {
         // Setting the layout for the contact details dialog (popup window)
         dialog.setContentView(R.layout.admin_contact)
@@ -102,10 +109,96 @@ class Admin_Dashboard : AppCompatActivity() {
         val name = dialog.findViewById<EditText>(R.id.editTextName)
         val number = dialog.findViewById<EditText>(R.id.editTextNumber)
         val email = dialog.findViewById<EditText>(R.id.editTextEmail)
+        val contactImageView = dialog.findViewById<ImageView>(R.id.adminC_image)
+        val selectImage = dialog.findViewById<Button>(R.id.buttonUploadImage)
         val save = dialog.findViewById<Button>(R.id.buttonSave)
 
-        dialog.show() // Displaying the dialog
+        dialog.show() // Display the dialog
+
+        // Set an OnClickListener to open image picker
+        selectImage.setOnClickListener {
+            openImagePicker() // Open image picker to choose an image
+        }
+
+        // Set an OnClickListener for the Save button
+        save.setOnClickListener {
+            // Retrieve user input
+            val contactName = name.text.toString()
+            val contactNumber = number.text.toString()
+            val contactEmail = email.text.toString()
+
+            // Validate the input (ensure no field is empty)
+            if (contactName.isNotEmpty() && contactNumber.isNotEmpty() && contactEmail.isNotEmpty()) {
+                if (selectedImageUri != null) {
+                    uploadImageAndSaveContact(contactName, contactNumber, contactEmail) // Upload the image first
+                } else {
+                    saveContactToDatabase(contactName, contactNumber, contactEmail, null) // No image selected
+                }
+            } else {
+                Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
+
+    // Method to open the image picker
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE_IMAGE_PICK)
+    }
+
+    // Handle result from image picker
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
+            selectedImageUri = data?.data // Get the image URI
+            dialog.findViewById<ImageView>(R.id.adminC_image).setImageURI(selectedImageUri) // Display image
+        }
+    }
+
+    // Upload image to Firebase Storage and then save contact to Realtime Database
+    private fun uploadImageAndSaveContact(name: String, number: String, email: String) {
+        val storageRef = FirebaseStorage.getInstance().reference.child("contact_images/${UUID.randomUUID()}.jpg")
+        selectedImageUri?.let { uri ->
+            storageRef.putFile(uri)
+                .addOnSuccessListener { taskSnapshot ->
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        saveContactToDatabase(name, number, email, uri.toString()) // Save contact with image URL
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Image upload failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    // Save contact details to Firebase Realtime Database
+    private fun saveContactToDatabase(name: String, number: String, email: String, imageUrl: String?) {
+        val contactId = FirebaseDatabase.getInstance().getReference("contacts").push().key
+        val contact = Contact(contactId, name, number, email, imageUrl)
+
+        if (contactId != null) {
+            FirebaseDatabase.getInstance().getReference("contacts").child(contactId).setValue(contact)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Contact saved successfully!", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss() // Close the dialog after saving
+                    } else {
+                        Toast.makeText(this, "Failed to save contact: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    // Data class for Contact with image URL
+    data class Contact(
+        val id: String?, // Contact ID (nullable)
+        val name: String,
+        val number: String,
+        val email: String,
+        val imageUrl: String? // Image URL can be nullable if no image is provided
+    )
+
 
     // Method to add or edit the "About Us" section
     private fun AboutUs() {
@@ -232,7 +325,7 @@ class Admin_Dashboard : AppCompatActivity() {
 
     // Data class representing a donation item in Firebase
     data class DonationItem(
-     //   val category: String? = "",  // Category of the donation item
+        //   val category: String? = "",  // Category of the donation item
         val item: String? = ""  // Name of the donation item
     )
 
