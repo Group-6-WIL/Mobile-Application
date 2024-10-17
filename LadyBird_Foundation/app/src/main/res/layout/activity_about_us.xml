@@ -9,6 +9,19 @@
     android:background="@drawable/home">
 
     <ImageView
+        android:id="@+id/about_contactImg2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.257"
+        app:layout_constraintStart_toEndOf="@+id/about_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/about_divider"
+        app:layout_constraintVertical_bias="0.896"
+        app:srcCompat="@drawable/baseline_phone_24" />
+
+    <ImageView
         android:id="@+id/about_adminDashboard"
         android:layout_width="70dp"
         android:layout_height="59dp"
@@ -32,36 +45,36 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView10"
-        app:layout_constraintVertical_bias="0.439" />
+        app:layout_constraintVertical_bias="0.424" />
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="338dp"
-        android:layout_height="93dp"
-        android:text="We strive to collect and donate as much as possible for these people who are in need. We do our best to have collection often and collect as much as people are willing to donate. We are so thankful for those who try to help our mission."
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="https://popia.co.za/"
+        app:layout_constraintBottom_toTopOf="@+id/about_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.287"
+        app:layout_constraintStart_toEndOf="@+id/about_adminDashboard"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.832" />
+        app:layout_constraintVertical_bias="0.283" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="142dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="About Us"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.027" />
 
     <TextView
         android:id="@+id/textView12"
@@ -73,37 +86,23 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.696" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:linksClickable="true"
-        android:text="https://popia.co.za/"
-        app:layout_constraintBottom_toTopOf="@+id/about_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.291"
-        app:layout_constraintStart_toEndOf="@+id/about_adminDashboard"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintVertical_bias="0.71" />
 
     <ImageView
         android:id="@+id/about_homeImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/baseline_home_24"
-        android:importantForAccessibility="no" />
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_home_24" />
 
     <ImageView
         android:id="@+id/about_donationImg"
@@ -112,7 +111,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toEndOf="@+id/about_aboutUsImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -125,7 +124,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toEndOf="@+id/about_homeImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -138,7 +137,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintHorizontal_bias="0.853"
         app:layout_constraintStart_toEndOf="@+id/about_eventsImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -151,7 +150,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toEndOf="@+id/about_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -175,7 +174,7 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/about_eventsImg"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toEndOf="@+id/about_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.577"

@@ -4,9 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +18,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class AboutUs : AppCompatActivity() {
 
@@ -31,6 +39,11 @@ class AboutUs : AppCompatActivity() {
     private lateinit var eventsBtn : ImageView
     private lateinit var loginOutBtn : ImageView
     private lateinit var adminLogin : ImageView
+    private lateinit var contactBtn : ImageView
+
+    private lateinit var aboutUsTextView: TextView
+    private lateinit var missionTextView: TextView
+    private lateinit var database: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +66,10 @@ class AboutUs : AppCompatActivity() {
         eventsBtn = findViewById(R.id.about_eventsImg)
         loginOutBtn = findViewById(R.id.about_loginoutImg)
         adminLogin = findViewById(R.id.about_adminDashboard)
+        contactBtn = findViewById(R.id.about_contactImg2)
 
+        aboutUsTextView = findViewById(R.id.textView10) // Your About Us TextView
+        missionTextView = findViewById(R.id.textView12)
 
         homeBtn.setOnClickListener {
             val intentHome = Intent(this, Home::class.java)
@@ -81,9 +97,13 @@ class AboutUs : AppCompatActivity() {
         }
 
         adminLogin.setOnClickListener {
-            val intentALogin = Intent(this, Admin_Dashboard::class.java)
-            startActivity(intentALogin)
+            showAdminPasswordDialog()
         }
+        contactBtn.setOnClickListener {
+            val intentcontact = Intent(this, Contact_Us::class.java)
+            startActivity(intentcontact)
+        }
+
 
         loginOutBtn.setOnClickListener {
             showLoginLogoutDialog()
@@ -99,7 +119,70 @@ class AboutUs : AppCompatActivity() {
 
         // Set up the auto-slide feature
         setupAutoSlide(imageList.size)
+
+        // Initialize Firebase Database
+        database = FirebaseDatabase.getInstance().reference
+
+        // Fetch data from Firebase
+        fetchDataFromFirebase()
+
     }
+
+    // New method to show the password prompt dialog
+    private fun showAdminPasswordDialog() {
+        // Inflate the custom dialog layout
+        val dialogView = layoutInflater.inflate(R.layout.admin_password, null)
+
+        val passwordField = dialogView.findViewById<EditText>(R.id.adminPassword)
+        val enterButton = dialogView.findViewById<Button>(R.id.admin_add_events_uploadIV)
+
+        // Create an AlertDialog with the custom layout
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        enterButton.setOnClickListener {
+            val enteredPassword = passwordField.text.toString()
+
+            // Check if the entered password is correct
+            if (enteredPassword == "TheLadyB1rdF0undation") {  // Replace with your desired password
+                Toast.makeText(this, "Access Granted", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+
+                // Navigate to Admin Dashboard
+                val intentAdmin = Intent(this, Admin_Dashboard::class.java)
+                startActivity(intentAdmin)
+            } else {
+                Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Show the dialog
+        dialog.show()
+    }
+
+    private fun fetchDataFromFirebase() {
+        database.child("aboutUs").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("FirebaseSnapshot", snapshot.value.toString()) // Log the entire snapshot
+                if (snapshot.exists()) {
+                    val aboutUsContent = snapshot.child("content").value?.toString() ?: "No content available"
+                    val missionContent = snapshot.child("mission").value?.toString() ?: "No mission statement available"
+
+                    aboutUsTextView.text = aboutUsContent
+                    missionTextView.text = missionContent
+                } else {
+                    Toast.makeText(this@AboutUs, "No data found", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@AboutUs, "Error fetching data", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 
     private fun setupAutoSlide(itemCount: Int) {
         runnable = Runnable {

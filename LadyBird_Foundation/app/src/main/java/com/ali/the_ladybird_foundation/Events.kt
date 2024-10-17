@@ -35,6 +35,7 @@ class Events : AppCompatActivity() {
     private lateinit var events : ImageView
     private lateinit var logout : ImageView
     private lateinit var ladybirdIcon: ImageView
+    private lateinit var contactBtn : ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +51,17 @@ class Events : AppCompatActivity() {
         events = findViewById(R.id.events_eventsImg)
         logout = findViewById(R.id.events_loginoutImg)
         ladybirdIcon = findViewById(R.id.events_adminDashboard)
+        contactBtn = findViewById(R.id.event_contactImg4)
 
         fetchEvents()
 
         homeBtn.setOnClickListener {
             val intentHome = Intent(this, Home::class.java)
             startActivity(intentHome)
+        }
+        contactBtn.setOnClickListener {
+            val intentcontatc = Intent(this, Contact_Us::class.java)
+            startActivity(intentcontatc)
         }
         aboutUs.setOnClickListener {
             val intentAbout = Intent(this, AboutUs::class.java)
@@ -78,12 +84,45 @@ class Events : AppCompatActivity() {
             showLoginLogoutDialog()
         }
 
+        // Inside your onCreate method
         ladybirdIcon.setOnClickListener {
-            val intentAdmin = Intent(this, Admin_Dashboard::class.java)
-            startActivity(intentAdmin)
+            showAdminPasswordDialog()
         }
 
 
+    }
+
+    // New method to show the password prompt dialog
+    private fun showAdminPasswordDialog() {
+        // Inflate the custom dialog layout
+        val dialogView = layoutInflater.inflate(R.layout.admin_password, null)
+
+        val passwordField = dialogView.findViewById<EditText>(R.id.adminPassword)
+        val enterButton = dialogView.findViewById<Button>(R.id.admin_add_events_uploadIV)
+
+        // Create an AlertDialog with the custom layout
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        enterButton.setOnClickListener {
+            val enteredPassword = passwordField.text.toString()
+
+            // Check if the entered password is correct
+            if (enteredPassword == "TheLadyB1rdF0undation") {  // Replace with your desired password
+                Toast.makeText(this, "Access Granted", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+
+                // Navigate to Admin Dashboard
+                val intentAdmin = Intent(this, Admin_Dashboard::class.java)
+                startActivity(intentAdmin)
+            } else {
+                Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Show the dialog
+        dialog.show()
     }
 
     private fun fetchEvents() {

@@ -8,6 +8,18 @@
     android:background="@drawable/home">
 
     <ImageView
+        android:id="@+id/event_contactImg4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toEndOf="@+id/events_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/events_divider"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/baseline_phone_24" />
+
+    <ImageView
         android:id="@+id/events_adminDashboard"
         android:layout_width="70dp"
         android:layout_height="59dp"
@@ -41,7 +53,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toEndOf="@+id/events_aboutUsImg"
         app:layout_constraintTop_toBottomOf="@+id/events_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -54,10 +66,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toEndOf="@+id/events_homeImg"
         app:layout_constraintTop_toBottomOf="@+id/events_divider"
-        app:layout_constraintVertical_bias="0.577"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_info_24" />
 
     <ImageView
@@ -67,10 +79,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintStart_toEndOf="@+id/events_eventsImg"
         app:layout_constraintTop_toBottomOf="@+id/events_divider"
-        app:layout_constraintVertical_bias="0.577"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_login_24" />
 
     <ImageView
@@ -80,10 +92,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.367"
         app:layout_constraintStart_toEndOf="@+id/events_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/events_divider"
-        app:layout_constraintVertical_bias="0.577"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_event_24" />
 
     <View
@@ -104,10 +116,10 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/events_eventsImg"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toEndOf="@+id/events_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/events_divider"
-        app:layout_constraintVertical_bias="0.577"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_share_location_24" />
 
     <ScrollView

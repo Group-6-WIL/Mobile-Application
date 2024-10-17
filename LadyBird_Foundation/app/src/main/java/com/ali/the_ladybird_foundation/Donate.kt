@@ -42,6 +42,7 @@ class Donate : AppCompatActivity() {
     private lateinit var donateBtn : ImageView
     private lateinit var locationBtn : ImageView
     private lateinit var eventsBtn : ImageView
+    private lateinit var contactUs : ImageView
     private lateinit var loginOutBtn : ImageView
     private lateinit var adminLogin : ImageView
 
@@ -60,6 +61,7 @@ class Donate : AppCompatActivity() {
         eventsBtn = findViewById(R.id.donate_eventsImg)
         loginOutBtn = findViewById(R.id.donate_loginoutImg)
         adminLogin = findViewById(R.id.donate_adminDashboard)
+        contactUs = findViewById(R.id.donate_contactImg3)
 
 
 
@@ -88,9 +90,13 @@ class Donate : AppCompatActivity() {
             startActivity(intentEvents)
         }
 
+        contactUs.setOnClickListener {
+            val intentcontacts = Intent(this, Contact_Us::class.java)
+            startActivity(intentcontacts)
+        }
+
         adminLogin.setOnClickListener {
-            val intentALogin = Intent(this, Admin_Dashboard::class.java)
-            startActivity(intentALogin)
+            showAdminPasswordDialog()
         }
 
         loginOutBtn.setOnClickListener {
@@ -128,6 +134,39 @@ class Donate : AppCompatActivity() {
         // Set click listeners
         viewBankingButton.setOnClickListener { showBankingDetails() }
         sendDonationButton.setOnClickListener { sendDonationEmail() }
+    }
+
+    // New method to show the password prompt dialog
+    private fun showAdminPasswordDialog() {
+        // Inflate the custom dialog layout
+        val dialogView = layoutInflater.inflate(R.layout.admin_password, null)
+
+        val passwordField = dialogView.findViewById<EditText>(R.id.adminPassword)
+        val enterButton = dialogView.findViewById<Button>(R.id.admin_add_events_uploadIV)
+
+        // Create an AlertDialog with the custom layout
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        enterButton.setOnClickListener {
+            val enteredPassword = passwordField.text.toString()
+
+            // Check if the entered password is correct
+            if (enteredPassword == "TheLadyB1rdF0undation") {  // Replace with your desired password
+                Toast.makeText(this, "Access Granted", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+
+                // Navigate to Admin Dashboard
+                val intentAdmin = Intent(this, Admin_Dashboard::class.java)
+                startActivity(intentAdmin)
+            } else {
+                Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Show the dialog
+        dialog.show()
     }
 
     private fun showBankingDetails() {
@@ -242,7 +281,7 @@ class Donate : AppCompatActivity() {
                     // Assume each location is stored as a Map with a "name" key
                     val locationMap = locationSnapshot.getValue<Map<String, String>>()
                     if (locationMap != null) {
-                        val locationName = locationMap["address"] // Adjust based on your structure
+                        val locationName = locationMap["address "] // Adjust based on your structure
                         if (locationName != null) {
                             locations.add(locationName)
                         }
@@ -261,8 +300,6 @@ class Donate : AppCompatActivity() {
             }
         })
     }
-
-
 
     private fun sendDonationEmail() {
         // Collect input values

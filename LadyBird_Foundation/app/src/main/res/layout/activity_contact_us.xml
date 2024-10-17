@@ -26,16 +26,28 @@
     </ScrollView>
 
     <ImageView
+        android:id="@+id/contact_contactImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.252"
+        app:layout_constraintStart_toEndOf="@+id/contact_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/baseline_phone_24" />
+
+    <ImageView
         android:id="@+id/contact_homeImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:layout_constraintVertical_bias="0.567"
+        app:layout_constraintVertical_bias="0.583"
         app:srcCompat="@drawable/baseline_home_24" />
 
     <ImageView
@@ -45,9 +57,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.149"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toEndOf="@+id/contact_aboutUsImg"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_attach_money_24" />
 
     <ImageView
@@ -57,10 +70,10 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/contact_eventsImg"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toEndOf="@+id/contact_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:layout_constraintVertical_bias="0.833"
+        app:layout_constraintVertical_bias="0.75"
         app:srcCompat="@drawable/baseline_share_location_24" />
 
     <ImageView
@@ -70,10 +83,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toEndOf="@+id/contact_homeImg"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:layout_constraintVertical_bias="0.594"
+        app:layout_constraintVertical_bias="0.583"
         app:srcCompat="@drawable/baseline_info_24" />
 
     <ImageView
@@ -83,9 +96,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.655"
+        app:layout_constraintHorizontal_bias="0.824"
         app:layout_constraintStart_toEndOf="@+id/contact_eventsImg"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_login_24" />
 
     <ImageView
@@ -95,10 +109,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.374"
         app:layout_constraintStart_toEndOf="@+id/contact_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:layout_constraintVertical_bias="0.615"
+        app:layout_constraintVertical_bias="0.583"
         app:srcCompat="@drawable/baseline_event_24" />
 
     <View

@@ -8,6 +8,18 @@
     android:background="@drawable/home">
 
 
+    <ImageView
+        android:id="@+id/location_contactImg5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintStart_toEndOf="@+id/location_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_phone_24" />
+
     <org.osmdroid.views.MapView
         android:id="@+id/mapView"
         android:layout_width="350dp"
@@ -72,7 +84,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toEndOf="@+id/location_aboutUsImg"
         app:layout_constraintTop_toBottomOf="@+id/location_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -85,7 +97,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toEndOf="@+id/location_homeImg"
         app:layout_constraintTop_toBottomOf="@+id/location_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -98,7 +110,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintHorizontal_bias="0.838"
         app:layout_constraintStart_toEndOf="@+id/location_eventsImg"
         app:layout_constraintTop_toBottomOf="@+id/location_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -111,7 +123,7 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toEndOf="@+id/location_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/location_divider"
         app:layout_constraintVertical_bias="0.577"
@@ -129,18 +141,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.897" />
 
+
     <ImageView
         android:id="@+id/location_locationImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/location_eventsImg"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toEndOf="@+id/location_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/location_divider"
         app:layout_constraintVertical_bias="0.577"
         app:srcCompat="@drawable/baseline_share_location_24" />
-
 
     <TextView
         android:id="@+id/textView3"
