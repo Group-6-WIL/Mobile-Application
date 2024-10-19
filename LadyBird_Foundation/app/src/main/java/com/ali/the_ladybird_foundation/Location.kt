@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.preference.PreferenceManager
 import android.view.Gravity
 import android.view.ViewGroup
@@ -18,6 +20,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -40,6 +46,7 @@ class Location : AppCompatActivity() {
 
     // MapView for displaying pins
     private lateinit var mapView: MapView
+    private lateinit var geocoder: Geocoder
     private val LOCATION_REQUEST_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +62,7 @@ class Location : AppCompatActivity() {
         managePermissions()
 
         databaseReference = FirebaseDatabase.getInstance().getReference("locations")
+        geocoder = Geocoder(this, Locale.getDefault())
 
         // Navigation button setup
         setupNavigationButtons()
@@ -72,7 +80,7 @@ class Location : AppCompatActivity() {
         mapView.controller.setZoom(15.0)
 
         // Set initial map location
-        val startPoint = GeoPoint(-29.8587, 31.0218) // Durban coordinates
+        val startPoint = GeoPoint(-29.7679675,30.7691305) // Main Office coordinates
         mapView.controller.setCenter(startPoint)
     }
 
@@ -97,8 +105,9 @@ class Location : AppCompatActivity() {
         databaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {
-                    val name = snapshot.child("name").getValue(String::class.java)
                     val address = snapshot.child("address").getValue(String::class.java)
+                    val name = snapshot.child("addressName").getValue(String::class.java)
+
 
                     // Dynamically create a new row for each donation site
                     val row = TableRow(this@Location)
@@ -126,41 +135,85 @@ class Location : AppCompatActivity() {
     }
 
     private fun loadMapMarkersByAddress() {
-        val geocoder = Geocoder(this, Locale.getDefault())
-
         databaseReference!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot in dataSnapshot.children) {
-                    val name = snapshot.child("name").getValue(String::class.java)
-                    val address = snapshot.child("address").getValue(String::class.java)
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!snapshot.exists()) {
+                    Toast.makeText(this@Location, "No locations found", Toast.LENGTH_SHORT).show()
+                    return
+                }
 
-                    if (name != null && address != null) {
-                        // Use Geocoder to convert the address to latitude and longitude
-                        val addressList = geocoder.getFromLocationName(address, 1)
-                        if (addressList != null && addressList.isNotEmpty()) {
-                            val location = addressList[0]
-                            val geoPoint = GeoPoint(location.latitude, location.longitude)
-                            addMarkerToMap(name, geoPoint)
+                // Debug: Log number of locations found
+                println("Locations fetched: ${snapshot.childrenCount}")
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    for (child in snapshot.children) {
+                        val address = child.child("address").getValue(String::class.java)
+                        val name = child.child("addressName").getValue(String::class.java)
+
+
+                        if (name != null && address != null) {
+                            println("Processing: $name, $address")
+                            geocodeAddressAndAddMarker(name, address)
                         } else {
-                            Toast.makeText(this@Location, "Unable to geocode address: $address", Toast.LENGTH_SHORT).show()
+                            println("Invalid data: $name, $address")
                         }
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        mapView.invalidate()  // Refresh the map after adding markers
                     }
                 }
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(this@Location, "Failed to load locations", Toast.LENGTH_SHORT).show()
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@Location, "Failed to load data", Toast.LENGTH_SHORT).show()
+                println("Firebase error: ${error.message}")
             }
         })
     }
 
+    private suspend fun geocodeAddressAndAddMarker(name: String, address: String) {
+        try {
+            val addressList = geocoder.getFromLocationName(address, 1)
+
+            if (!addressList.isNullOrEmpty()) {
+                val location = addressList[0]
+                val geoPoint = GeoPoint(location.latitude, location.longitude)
+
+                println("Geocoded: $name -> ${geoPoint.latitude}, ${geoPoint.longitude}")
+
+                withContext(Dispatchers.Main) {
+                    addMarkerToMap(name, geoPoint)
+                }
+            } else {
+                println("Geocoding failed: $address")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@Location, "Unable to geocode: $address", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: Exception) {
+            println("Error during geocoding: ${e.message}")
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@Location, "Geocoding error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
     private fun addMarkerToMap(name: String, geoPoint: GeoPoint) {
-        val marker = Marker(mapView)
-        marker.position = geoPoint
-        marker.title = name
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        val marker = Marker(mapView).apply {
+            position = geoPoint
+            title = name
+            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        }
+
+        // Debug: Confirm marker addition
+        println("Marker added: $name at ${geoPoint.latitude}, ${geoPoint.longitude}")
+
         mapView.overlays.add(marker)
     }
+
+
 
     // New method to show the password prompt dialog
     private fun showAdminPasswordDialog() {
