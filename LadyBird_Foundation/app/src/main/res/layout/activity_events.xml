@@ -8,6 +8,21 @@
     android:background="@drawable/home">
 
     <ImageView
+        android:id="@+id/popiact"
+        android:layout_width="95dp"
+        android:layout_height="93dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:onClick="openPopiaWebsite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toEndOf="@+id/event_contactImg4"
+        app:layout_constraintTop_toBottomOf="@+id/events_divider"
+        app:layout_constraintVertical_bias="0.166"
+        app:srcCompat="@drawable/popi" />
+
+    <ImageView
         android:id="@+id/event_contactImg4"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -71,19 +86,6 @@
         app:layout_constraintTop_toBottomOf="@+id/events_divider"
         app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/baseline_info_24" />
-
-    <ImageView
-        android:id="@+id/events_loginoutImg"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
-        app:layout_constraintStart_toEndOf="@+id/events_eventsImg"
-        app:layout_constraintTop_toBottomOf="@+id/events_divider"
-        app:layout_constraintVertical_bias="0.555"
-        app:srcCompat="@drawable/baseline_login_24" />
 
     <ImageView
         android:id="@+id/events_eventsImg"

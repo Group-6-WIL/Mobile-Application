@@ -35,21 +35,20 @@
         app:srcCompat="@drawable/willladybughome"
         tools:ignore="ImageContrastCheck" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/popiact"
+        android:layout_width="95dp"
+        android:layout_height="93dp"
         android:autoLink="web"
         android:linksClickable="true"
-        android:text="https://popia.co.za/"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/donate_divider"
+        android:onClick="openPopiaWebsite"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toEndOf="@+id/donate_adminDashboard"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toEndOf="@+id/donate_contactImg3"
+        app:layout_constraintTop_toBottomOf="@+id/donate_divider"
+        app:layout_constraintVertical_bias="0.055"
+        app:srcCompat="@drawable/popi" />
 
     <ImageView
         android:id="@+id/donate_homeImg"
@@ -89,19 +88,6 @@
         app:layout_constraintTop_toBottomOf="@+id/donate_divider"
         app:layout_constraintVertical_bias="0.577"
         app:srcCompat="@drawable/baseline_info_24" />
-
-    <ImageView
-        android:id="@+id/donate_loginoutImg"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
-        app:layout_constraintStart_toEndOf="@+id/donate_eventsImg"
-        app:layout_constraintTop_toBottomOf="@+id/donate_divider"
-        app:layout_constraintVertical_bias="0.577"
-        app:srcCompat="@drawable/baseline_login_24" />
 
     <ImageView
         android:id="@+id/donate_eventsImg"
@@ -148,10 +134,10 @@
         android:text="View Banking Details"
         app:layout_constraintBottom_toTopOf="@+id/donate_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
+        app:layout_constraintHorizontal_bias="0.855"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.014" />
 
     <View
         android:id="@+id/divider"

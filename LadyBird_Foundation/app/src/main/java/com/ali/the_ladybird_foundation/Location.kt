@@ -1,38 +1,27 @@
 package com.ali.the_ladybird_foundation
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.preference.PreferenceManager
-import android.view.Gravity
-import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.google.firebase.auth.FirebaseAuth
+import androidx.cardview.widget.CardView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.osmdroid.config.Configuration
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import java.util.Locale
 
 class Location : AppCompatActivity() {
-    private var donationTable: TableLayout? = null
-    private var databaseReference: DatabaseReference? = null
+
+    private lateinit var suburbSpinner: Spinner
+    private lateinit var locationsContainer: LinearLayout
+    private lateinit var database: DatabaseReference
 
     // Navigation buttons
     private lateinit var homeBtn: ImageView
@@ -41,179 +30,136 @@ class Location : AppCompatActivity() {
     private lateinit var locationBtn: ImageView
     private lateinit var eventsBtn: ImageView
     private lateinit var contactBtn : ImageView
-    private lateinit var loginOutBtn: ImageView
     private lateinit var adminLogin: ImageView
-
-    // MapView for displaying pins
-    private lateinit var mapView: MapView
-    private lateinit var geocoder: Geocoder
-    private val LOCATION_REQUEST_CODE = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
+        Configuration.getInstance().load(
+            applicationContext,
+            PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        )
         setContentView(R.layout.activity_location)
 
-        donationTable = findViewById(R.id.donation_table)
-        mapView = findViewById(R.id.mapView)
+        // Initialize Firebase Database Reference
+        database = FirebaseDatabase.getInstance().reference
 
+        suburbSpinner = findViewById(R.id.spinner)
+        locationsContainer = findViewById(R.id.location_container) // Make sure this ID is correct
 
-        setupMap()
-        managePermissions()
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("locations")
-        geocoder = Geocoder(this, Locale.getDefault())
-
-        // Navigation button setup
         setupNavigationButtons()
 
-        // Fetch data from Firebase and populate the table
-        loadDonationSites()
-
-        // Add markers to the map from Firebase locations
-        loadMapMarkersByAddress() // New function for geocoding addresses
-    }
-
-    private fun setupMap() {
-        mapView.setBuiltInZoomControls(true)
-        mapView.setMultiTouchControls(true)
-        mapView.controller.setZoom(15.0)
-
-        // Set initial map location
-        val startPoint = GeoPoint(-29.7679675,30.7691305) // Main Office coordinates
-        mapView.controller.setCenter(startPoint)
-    }
-
-    private fun managePermissions() {
-        val requestPermissions = mutableListOf<String>()
-        if (!isLocationPermissionGranted()) {
-            requestPermissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION)
-            requestPermissions.add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-        if (requestPermissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, requestPermissions.toTypedArray(), LOCATION_REQUEST_CODE)
-        }
-    }
-
-    private fun isLocationPermissionGranted(): Boolean {
-        val fineLocation = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        val coarseLocation = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        return fineLocation && coarseLocation
-    }
-
-    private fun loadDonationSites() {
-        databaseReference!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot in dataSnapshot.children) {
-                    val address = snapshot.child("address").getValue(String::class.java)
-                    val name = snapshot.child("addressName").getValue(String::class.java)
-
-
-                    // Dynamically create a new row for each donation site
-                    val row = TableRow(this@Location)
-                    row.layoutParams = TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-                    // Create TextViews for each column
-                    val nameTextView = TextView(this@Location)
-                    nameTextView.text = name
-                    nameTextView.setPadding(16, 16, 16, 16)
-                    nameTextView.gravity = Gravity.START
-
-                    val addressTextView = TextView(this@Location)
-                    addressTextView.text = address
-                    addressTextView.setPadding(16, 16, 16, 16)
-                    addressTextView.gravity = Gravity.START
-
-                    row.addView(nameTextView)
-                    row.addView(addressTextView)
-                    donationTable!!.addView(row)
-                }
+        // Set up Spinner listener
+        suburbSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                val selectedSuburb = parent.getItemAtPosition(position) as String
+                fetchLocations(selectedSuburb)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
-    private fun loadMapMarkersByAddress() {
-        databaseReference!!.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (!snapshot.exists()) {
-                    Toast.makeText(this@Location, "No locations found", Toast.LENGTH_SHORT).show()
-                    return
-                }
+    private fun fetchLocations(suburb: String) {
+        database.child("locations")
+            .orderByChild("suburb")
+            .equalTo(suburb)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // Clear previous location entries
+                    locationsContainer.removeAllViews()
 
-                // Debug: Log number of locations found
-                println("Locations fetched: ${snapshot.childrenCount}")
+                    if (snapshot.exists()) {
+                        for (locationSnapshot in snapshot.children) {
+                            val address = locationSnapshot.child("address").getValue(String::class.java) ?: ""
+                            val addressName = locationSnapshot.child("addressName").getValue(String::class.java) ?: ""
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    for (child in snapshot.children) {
-                        val address = child.child("address").getValue(String::class.java)
-                        val name = child.child("addressName").getValue(String::class.java)
-
-
-                        if (name != null && address != null) {
-                            println("Processing: $name, $address")
-                            geocodeAddressAndAddMarker(name, address)
-                        } else {
-                            println("Invalid data: $name, $address")
+                            // Create and add a new location entry
+                            addLocationCard(addressName, address)
                         }
-                    }
-
-                    withContext(Dispatchers.Main) {
-                        mapView.invalidate()  // Refresh the map after adding markers
+                    } else {
+                        Toast.makeText(this@Location, "No locations found for selected suburb", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Location, "Failed to load data", Toast.LENGTH_SHORT).show()
-                println("Firebase error: ${error.message}")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@Location, "Error fetching locations: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
-    private suspend fun geocodeAddressAndAddMarker(name: String, address: String) {
-        try {
-            val addressList = geocoder.getFromLocationName(address, 1)
+    private fun addLocationCard(addressName: String, address: String) {
+        // Inflate the CardView layout
+        val inflater = LayoutInflater.from(this)
+        val cardView = inflater.inflate(R.layout.locationcar, locationsContainer, false) as CardView
 
-            if (!addressList.isNullOrEmpty()) {
-                val location = addressList[0]
-                val geoPoint = GeoPoint(location.latitude, location.longitude)
+        // Get references to the TextViews in the CardView
+        val nameTextView: TextView = cardView.findViewById(R.id.location_name)
+        val addressTextView: TextView = cardView.findViewById(R.id.location_address)
 
-                println("Geocoded: $name -> ${geoPoint.latitude}, ${geoPoint.longitude}")
+        // Set the data to the TextViews
+        nameTextView.text = addressName
+        addressTextView.text = address
 
-                withContext(Dispatchers.Main) {
-                    addMarkerToMap(name, geoPoint)
-                }
-            } else {
-                println("Geocoding failed: $address")
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@Location, "Unable to geocode: $address", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } catch (e: Exception) {
-            println("Error during geocoding: ${e.message}")
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@Location, "Geocoding error: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
-    private fun addMarkerToMap(name: String, geoPoint: GeoPoint) {
-        val marker = Marker(mapView).apply {
-            position = geoPoint
-            title = name
-            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        // Set a click listener for the card to display location details
+        cardView.setOnClickListener {
+            displayLocationDetails(addressName, address)
         }
 
-        // Debug: Confirm marker addition
-        println("Marker added: $name at ${geoPoint.latitude}, ${geoPoint.longitude}")
-
-        mapView.overlays.add(marker)
+        // Add the CardView to the container
+        locationsContainer.addView(cardView)
     }
 
+    private fun displayLocationDetails(addressName: String, address: String) {
+        // Create a simple AlertDialog to display the details
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(addressName)
+        builder.setMessage("Address: $address")
 
+        // Add a positive button to dismiss the dialog
+        builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+
+        // Show the AlertDialog
+        builder.create().show()
+    }
+
+    fun openPopiaWebsite(view: View) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://popia.co.za/"))
+        startActivity(browserIntent)
+    }
+
+    private fun setupNavigationButtons() {
+        homeBtn = findViewById(R.id.location_homeImg)
+        aboutUsBtn = findViewById(R.id.location_aboutUsImg)
+        donateBtn = findViewById(R.id.location_donationImg)
+        locationBtn = findViewById(R.id.location_locationImg)
+        eventsBtn = findViewById(R.id.location_eventsImg)
+        adminLogin = findViewById(R.id.home_adminDashboard)
+        contactBtn = findViewById(R.id.location_contactImg5)
+
+        homeBtn.setOnClickListener {
+            startActivity(Intent(this, Home::class.java))
+        }
+        aboutUsBtn.setOnClickListener {
+            startActivity(Intent(this, AboutUs::class.java))
+        }
+        donateBtn.setOnClickListener {
+            startActivity(Intent(this, Donate::class.java))
+        }
+        locationBtn.setOnClickListener {
+            startActivity(Intent(this, Location::class.java))
+        }
+        eventsBtn.setOnClickListener {
+            startActivity(Intent(this, Events::class.java))
+        }
+        adminLogin.setOnClickListener {
+            showAdminPasswordDialog()
+        }
+        contactBtn.setOnClickListener {
+            startActivity(Intent(this, Contact_Us::class.java))
+        }
+
+
+    }
 
     // New method to show the password prompt dialog
     private fun showAdminPasswordDialog() {
@@ -246,65 +192,5 @@ class Location : AppCompatActivity() {
 
         // Show the dialog
         dialog.show()
-    }
-
-    private fun setupNavigationButtons() {
-        homeBtn = findViewById(R.id.location_homeImg)
-        aboutUsBtn = findViewById(R.id.location_aboutUsImg)
-        donateBtn = findViewById(R.id.location_donationImg)
-        locationBtn = findViewById(R.id.location_locationImg)
-        eventsBtn = findViewById(R.id.location_eventsImg)
-        loginOutBtn = findViewById(R.id.location_loginoutImg)
-        adminLogin = findViewById(R.id.home_adminDashboard)
-        contactBtn = findViewById(R.id.location_contactImg5)
-
-        homeBtn.setOnClickListener {
-            startActivity(Intent(this, Home::class.java))
-        }
-        aboutUsBtn.setOnClickListener {
-            startActivity(Intent(this, AboutUs::class.java))
-        }
-        donateBtn.setOnClickListener {
-            startActivity(Intent(this, Donate::class.java))
-        }
-        locationBtn.setOnClickListener {
-            startActivity(Intent(this, Location::class.java))
-        }
-        eventsBtn.setOnClickListener {
-            startActivity(Intent(this, Events::class.java))
-        }
-        adminLogin.setOnClickListener {
-            showAdminPasswordDialog()
-        }
-        contactBtn.setOnClickListener {
-            startActivity(Intent(this, Contact_Us::class.java))
-        }
-        loginOutBtn.setOnClickListener {
-            showLoginLogoutDialog()
-        }
-    }
-
-    private fun showLoginLogoutDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
-        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
-        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Login/Logout")
-        builder.setView(dialogView)
-        val alertDialog = builder.create()
-
-        btnConfirm.setOnClickListener {
-            when (radioGroup.checkedRadioButtonId) {
-                R.id.radioLogin -> startActivity(Intent(this, Login::class.java))
-                R.id.radioLogout -> {
-                    FirebaseAuth.getInstance().signOut()
-                    Toast.makeText(this, "You have logged out", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, Login::class.java))
-                }
-            }
-        }
-
-        alertDialog.show()
     }
 }

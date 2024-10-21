@@ -2,6 +2,7 @@ package com.ali.the_ladybird_foundation
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -43,7 +44,6 @@ class Donate : AppCompatActivity() {
     private lateinit var locationBtn : ImageView
     private lateinit var eventsBtn : ImageView
     private lateinit var contactUs : ImageView
-    private lateinit var loginOutBtn : ImageView
     private lateinit var adminLogin : ImageView
 
     private val categories = mutableListOf<String>()
@@ -59,7 +59,6 @@ class Donate : AppCompatActivity() {
         donateBtn = findViewById(R.id.donate_donationImg)
         locationBtn = findViewById(R.id.donate_locationImg)
         eventsBtn = findViewById(R.id.donate_eventsImg)
-        loginOutBtn = findViewById(R.id.donate_loginoutImg)
         adminLogin = findViewById(R.id.donate_adminDashboard)
         contactUs = findViewById(R.id.donate_contactImg3)
 
@@ -99,9 +98,6 @@ class Donate : AppCompatActivity() {
             showAdminPasswordDialog()
         }
 
-        loginOutBtn.setOnClickListener {
-            showLoginLogoutDialog()
-        }
 
 
 
@@ -119,14 +115,6 @@ class Donate : AppCompatActivity() {
         viewBankingButton = findViewById(R.id.button)
         sendDonationButton = findViewById(R.id.button2)
 
-        // Check if the user is logged in
-        if (auth.currentUser == null) {
-            // User is not logged in, redirect to Login activity
-            val intentLogin = Intent(this, Login::class.java)
-            startActivity(intentLogin)
-            finish() // Optionally finish the current activity to prevent back navigation
-        }
-
         // Set up spinners
         setupCategorySpinner()
         setupLocationSpinner()
@@ -134,6 +122,11 @@ class Donate : AppCompatActivity() {
         // Set click listeners
         viewBankingButton.setOnClickListener { showBankingDetails() }
         sendDonationButton.setOnClickListener { sendDonationEmail() }
+    }
+
+    fun openPopiaWebsite(view: android.view.View) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://popia.co.za/"))
+        startActivity(browserIntent)
     }
 
     // New method to show the password prompt dialog
@@ -351,42 +344,5 @@ class Donate : AppCompatActivity() {
             Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
-    private fun showLoginLogoutDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
-        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
-        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
-
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle("Login/Logout")
-        builder.setView(dialogView)
-
-        val alertDialog = builder.create()
-
-        btnConfirm.setOnClickListener {
-            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            when (selectedRadioButtonId) {
-                R.id.radioLogin -> {
-                    // Navigate to Login Activity
-                    val intentLogin = Intent(this, Login::class.java)
-                    startActivity(intentLogin)
-                }
-                R.id.radioLogout -> {
-                    // Log out the user
-                    FirebaseAuth.getInstance().signOut()
-                    // Redirect to Home or Login activity
-                    Toast.makeText(this, "You have been Succussfully logged out", Toast.LENGTH_SHORT).show()
-                    val intentHome = Intent(this, Home::class.java)
-                    startActivity(intentHome)
-                }
-            }
-            alertDialog.dismiss()
-        }
-
-        alertDialog.show()
-    }
-
 
 }

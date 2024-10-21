@@ -8,6 +8,21 @@
     tools:context=".Home"
     android:background="@drawable/home">
 
+    <ImageView
+        android:id="@+id/popiact"
+        android:layout_width="95dp"
+        android:layout_height="93dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:onClick="openPopiaWebsite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toEndOf="@+id/home_contactImg"
+        app:layout_constraintTop_toTopOf="@+id/home_divider"
+        app:layout_constraintVertical_bias="0.28"
+        app:srcCompat="@drawable/popi" />
+
     <TextView
         android:id="@+id/home_TV2"
         android:layout_width="343dp"
@@ -159,12 +174,13 @@
         android:id="@+id/home_contactImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginStart="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/home_loginoutImg"
-        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/home_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.567"
+        app:layout_constraintVertical_bias="0.594"
         app:srcCompat="@drawable/baseline_phone_24" />
 
     <ImageView
@@ -205,19 +221,6 @@
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
         app:layout_constraintVertical_bias="0.567"
         app:srcCompat="@drawable/baseline_info_24" />
-
-    <ImageView
-        android:id="@+id/home_loginoutImg"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.833"
-        app:layout_constraintStart_toEndOf="@+id/home_eventsImg"
-        app:layout_constraintTop_toBottomOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/baseline_login_24" />
 
     <ImageView
         android:id="@+id/home_eventsImg"

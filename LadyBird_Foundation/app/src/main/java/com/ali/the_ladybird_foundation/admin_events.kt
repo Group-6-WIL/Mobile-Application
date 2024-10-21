@@ -7,6 +7,9 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -14,6 +17,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -25,6 +29,7 @@ import java.util.*
 class admin_events : AppCompatActivity() {
 
     // UI elements
+    private lateinit var selectEventSpinner: Spinner // Add this line
     private lateinit var addEventsBtn: Button
     private lateinit var editEventsBtn: Button
     private lateinit var deleteEventsBtn: Button
@@ -95,14 +100,16 @@ class admin_events : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Save event with or without image
+            val selectedEvent = eventsList.find { it.eventName == eventNameStr }
+            val eventId = selectedEvent?.eventId  // Use the existing event ID if editing
+
             if (imageUri != null) {
-                uploadImageToFirebase(eventNameStr, descriptionStr, dateStr)
+                uploadImageToFirebase(eventNameStr, descriptionStr, dateStr, eventId)
             } else {
-                // Pass null for imageUrl if no image is uploaded
-                saveImageUrlToDatabase(null, eventNameStr, descriptionStr, dateStr)
+                saveImageUrlToDatabase(null, eventNameStr, descriptionStr, dateStr, eventId)
             }
         }
+
 
         // Show the dialog to add an event
         dialog.show()
@@ -113,26 +120,50 @@ class admin_events : AppCompatActivity() {
         dialog.setContentView(R.layout.admineditevent)
         dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
 
+        val selectEventSpinner = dialog.findViewById<Spinner>(R.id.admin_edit_event_spinner)
         eventImageView = dialog.findViewById(R.id.admin_imageViewE)
         val eventName = dialog.findViewById<EditText>(R.id.admin_edit_events_eventname)
         val description = dialog.findViewById<EditText>(R.id.admin_edit_events_eventdescription)
         dateEditText = dialog.findViewById(R.id.admin_edit_event_eventdate)
         val uploadImageBtn = dialog.findViewById<Button>(R.id.admin_edit_events_uploadIV)
-        val addBtn = dialog.findViewById<Button>(R.id.admin_edit_events_save)
+        val saveBtn = dialog.findViewById<Button>(R.id.admin_edit_events_save)
 
-        // Set date picker
+        // Load events into the spinner
+        loadEventsIntoSpinner(selectEventSpinner)
+
+        // When an event is selected, populate the form fields with its data
+        selectEventSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                val selectedEvent = eventsList[position]
+                eventName.setText(selectedEvent.eventName)
+                description.setText(selectedEvent.description)
+                dateEditText.setText(selectedEvent.date)
+
+                // Optionally load the event's image if available
+                selectedEvent.imageUrl?.let { imageUrl ->
+                    Glide.with(this@admin_events).load(imageUrl).into(eventImageView)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // No action needed
+            }
+        }
+
+        // Date picker setup
         dateEditText.isFocusable = false
         dateEditText.isClickable = true
         dateEditText.setOnClickListener { showDatePickerDialog() }
 
-        // Allow image upload when clicked
+        // Image upload setup
         uploadImageBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
-// Adjust the AddEvent and EditEvent methods to call the new saveImageUrlToDatabase correctly
-        addBtn.setOnClickListener {
+        // Save button to update the event
+        saveBtn.setOnClickListener {
+            val selectedEvent = eventsList[selectEventSpinner.selectedItemPosition]
             val eventNameStr = eventName.text.toString().trim()
             val descriptionStr = description.text.toString().trim()
             val dateStr = dateEditText.text.toString().trim()
@@ -142,12 +173,11 @@ class admin_events : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Save event with or without image
+            // Update event with or without new image
             if (imageUri != null) {
-                uploadImageToFirebase(eventNameStr, descriptionStr, dateStr)
+                uploadImageToFirebase(eventNameStr, descriptionStr, dateStr, selectedEvent.eventId!!)
             } else {
-                // Pass null for imageUrl if no image is uploaded
-                saveImageUrlToDatabase(null, eventNameStr, descriptionStr, dateStr)
+                saveImageUrlToDatabase(null, eventNameStr, descriptionStr, dateStr, selectedEvent.eventId!!)
             }
         }
 
@@ -155,11 +185,12 @@ class admin_events : AppCompatActivity() {
     }
 
     // Method to delete an event
+
     private fun DeleteEvent() {
         dialog.setContentView(R.layout.admindeleteevents)
         dialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
 
-        val selectEventSpinner = dialog.findViewById<Spinner>(R.id.admin_delete_event_spinner)
+        selectEventSpinner = dialog.findViewById(R.id.admin_delete_event_spinner) // Initialize here
         val deleteEventButton = dialog.findViewById<Button>(R.id.admin_delete_event_button)
 
         // Load events from Firebase and populate the Spinner
@@ -167,24 +198,41 @@ class admin_events : AppCompatActivity() {
 
         // Delete event when the Delete button is clicked
         deleteEventButton.setOnClickListener {
-            val selectedEventName = selectEventSpinner.selectedItem as String
-            val selectedEvent = eventsList.find { it.eventName == selectedEventName }
-            deleteEvent(selectedEvent?.eventId)
+            val selectedPosition = selectEventSpinner.selectedItemPosition
+
+            if (eventsList.isNotEmpty() && selectedPosition >= 0) {
+                val selectedEvent = eventsList[selectedPosition]
+                Log.d("DeleteEvent", "Selected Event ID: ${selectedEvent.eventId}") // Log the selected event ID
+
+                if (selectedEvent.eventId != null) {
+                    deleteEvent(selectedEvent.eventId!!)  // Ensure we're passing the ID correctly
+                }
+            } else {
+                Log.d("DeleteEvent", "No event selected or available!") // Log if no event is selected
+                Toast.makeText(this, "No event selected or available!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         dialog.show()
     }
 
-    // Load the events from Firebase and populate the Spinner for event deletion
+    // Load events and populate spinner with valid data
     private fun loadEventsIntoSpinner(spinner: Spinner) {
         val databaseRef = FirebaseDatabase.getInstance().getReference("events")
 
         databaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 eventsList = snapshot.children.mapNotNull { it.getValue(Event::class.java) }
-                val adapter = ArrayAdapter(this@admin_events, android.R.layout.simple_spinner_item, eventsList.map { it.eventName })
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner.adapter = adapter
+
+                if (eventsList.isEmpty()) {
+                    Toast.makeText(this@admin_events, "No events available for deletion.", Toast.LENGTH_SHORT).show()
+                    spinner.adapter = null // Clear spinner if no events are available
+                } else {
+                    val eventNames = eventsList.map { it.eventName.takeIf { it.isNotBlank() } ?: "Unnamed Event" }
+                    val adapter = ArrayAdapter(this@admin_events, android.R.layout.simple_spinner_item, eventNames)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner.adapter = adapter
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -194,19 +242,19 @@ class admin_events : AppCompatActivity() {
     }
 
     // Delete the selected event by its ID from Firebase
-    private fun deleteEvent(eventId: String?) {
-        if (eventId != null) {
-            val databaseRef = FirebaseDatabase.getInstance().getReference("events").child(eventId)
-            databaseRef.removeValue().addOnSuccessListener {
-                Toast.makeText(this@admin_events, "Event deleted successfully!", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }.addOnFailureListener {
-                Toast.makeText(this@admin_events, "Error deleting event: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Toast.makeText(this@admin_events, "No event selected!", Toast.LENGTH_SHORT).show()
+    private fun deleteEvent(eventId: String) {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("events").child(eventId)
+        databaseRef.removeValue().addOnSuccessListener {
+            Log.d("DeleteEvent", "Event deleted successfully!") // Log success
+            Toast.makeText(this@admin_events, "Event deleted successfully!", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()  // Dismiss the dialog after successful deletion
+            loadEventsIntoSpinner(selectEventSpinner)  // Reload spinner to reflect changes
+        }.addOnFailureListener { exception ->
+            Log.e("DeleteEvent", "Error deleting event: ${exception.message}") // Log error
+            Toast.makeText(this@admin_events, "Error deleting event: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     // Show date picker dialog when the date field is clicked
     private fun showDatePickerDialog() {
@@ -233,7 +281,12 @@ class admin_events : AppCompatActivity() {
     }
 
     // Upload the image to Firebase storage and save event data to Firebase database
-    private fun uploadImageToFirebase(eventName: String, description: String, date: String) {
+    private fun uploadImageToFirebase(
+        eventName: String,
+        description: String,
+        date: String,
+        eventId: String? = null
+    ) {
         val storageRef = FirebaseStorage.getInstance().reference
         val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
         val fileName = formatter.format(Date())
@@ -242,40 +295,43 @@ class admin_events : AppCompatActivity() {
         imageUri?.let { uri ->
             imageRef.putFile(uri)
                 .addOnSuccessListener {
-                    // Image upload succeeded, now get the download URL
                     imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                        // Now save the URL to the database
-                        saveImageUrlToDatabase(downloadUri.toString(), eventName, description, date)
-                    }.addOnFailureListener { e ->
-                        // Handle error getting download URL
-                        Toast.makeText(this, "Failed to get image URL. Please try again.", Toast.LENGTH_SHORT).show()
+                        saveImageUrlToDatabase(downloadUri.toString(), eventName, description, date, eventId)
                     }
                 }
-                .addOnFailureListener { storageError ->
-                    // Handle any errors during the upload
+                .addOnFailureListener {
                     Toast.makeText(this, "Image upload failed. Please try again.", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
-    // Updated method to save image URL to the database
-    private fun saveImageUrlToDatabase(imageUrl: String?, eventName: String, description: String, date: String) {
+
+    // Updated method to save the event to the database
+    private fun saveImageUrlToDatabase(
+        imageUrl: String?,
+        eventName: String,
+        description: String,
+        date: String,
+        eventId: String? = null
+    ) {
         val databaseRef = FirebaseDatabase.getInstance().getReference("events")
-        val eventId = databaseRef.push().key
+        val newEventId = eventId ?: databaseRef.push().key  // Use the existing ID or generate a new one
 
-        val event = Event(eventId, eventName, description, date, imageUrl)
-
-        eventId?.let {
-            databaseRef.child(it).setValue(event)
+        if (newEventId != null) {
+            val event = Event(newEventId, eventName, description, date, imageUrl)
+            databaseRef.child(newEventId).setValue(event)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Event added successfully!", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss() // Close the dialog
+                    Toast.makeText(this, "Event saved successfully!", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()  // Close dialog after saving
                 }
-                .addOnFailureListener { e ->
+                .addOnFailureListener {
                     Toast.makeText(this, "Failed to save event. Please try again.", Toast.LENGTH_SHORT).show()
                 }
+        } else {
+            Toast.makeText(this, "Failed to generate event ID.", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
 

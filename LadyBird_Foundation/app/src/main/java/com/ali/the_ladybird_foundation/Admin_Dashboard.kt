@@ -12,6 +12,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -201,18 +202,7 @@ class Admin_Dashboard : AppCompatActivity() {
 
 
     // Method to add or edit the "About Us" section
-    private fun AboutUs() {
-        // Setting the layout for the About Us section dialog
-        dialog.setContentView(R.layout.activity_adminaboutus)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // Finding UI elements within the dialog
-        val aboutUs = dialog.findViewById<EditText>(R.id.admin_aboutused)  // About Us description
-        val mission = dialog.findViewById<EditText>(R.id.admin_aboutus_mission)  // Mission statement
-        val save = dialog.findViewById<Button>(R.id.admin_aboutus_updatebtn)  // Save button
-
-        dialog.show() // Displaying the dialog
-    }
 
     // Method to add a donation item (category and item name)
     private fun AddDonationItem() {
@@ -269,49 +259,88 @@ class Admin_Dashboard : AppCompatActivity() {
         dialog.show()  // Displaying the dialog
     }
 
-
-    // Method to add a new location to the Firebase database
-    private fun AddLocation() {
-        // Setting the layout for the location dialog
-        dialog.setContentView(R.layout.activity_admin_location)
+    private fun AboutUs() {
+        // Setting the layout for the About Us section dialog
+        dialog.setContentView(R.layout.activity_adminaboutus)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // Finding UI elements within the dialog
-        val addressEditText = dialog.findViewById<EditText>(R.id.aLocation_address)  // Location address
-        val addressNameEditText = dialog.findViewById<EditText>(R.id.aLocation_addressName)  // Address name
-        val saveButton = dialog.findViewById<Button>(R.id.alocation_saveBtn)  // Save button
+        val aboutUsEditText = dialog.findViewById<EditText>(R.id.admin_aboutused)
+        val missionEditText = dialog.findViewById<EditText>(R.id.admin_aboutus_mission)
+        val saveButton = dialog.findViewById<Button>(R.id.admin_aboutus_updatebtn)
+
+        dialog.show() // Displaying the dialog
+
+        // Handle the save button click
+        saveButton.setOnClickListener {
+            val aboutUsText = aboutUsEditText.text.toString().trim()
+            val missionText = missionEditText.text.toString().trim()
+
+            if (aboutUsText.isNotEmpty() && missionText.isNotEmpty()) {
+                val database = FirebaseDatabase.getInstance().getReference("aboutUs")
+                val aboutUsData = mapOf(
+                    "Content" to aboutUsText,
+                    "Mission" to missionText
+                )
+
+                // Save data to Firebase
+                database.setValue(aboutUsData)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "About Us updated successfully!", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss() // Close the dialog after saving
+                        } else {
+                            Toast.makeText(this, "Failed to update: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "Please fill out both fields", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    // Method to add a new location to the Firebase database
+    private fun AddLocation() {
+        // Set the layout for the location dialog
+        dialog.setContentView(R.layout.activity_admin_location)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Find UI elements within the dialog
+        val addressEditText = dialog.findViewById<EditText>(R.id.aLocation_address)  // Physical Address
+        val addressNameEditText = dialog.findViewById<EditText>(R.id.aLocation_addressName)  // Address Name
+        val areaSpinner = dialog.findViewById<Spinner>(R.id.area)  // Suburb Spinner
+        val saveButton = dialog.findViewById<Button>(R.id.alocation_saveBtn)  // Save Button
 
         // Handling save button click: validate input, then save location to Firebase
         saveButton.setOnClickListener {
             val address = addressEditText.text.toString().trim()  // Get address input
             val addressName = addressNameEditText.text.toString().trim()  // Get address name input
+            val selectedSuburb = areaSpinner.selectedItem.toString()  // Get selected suburb from Spinner
 
             // Check if inputs are empty and show error message if necessary
-            if (TextUtils.isEmpty(address) || TextUtils.isEmpty(addressName)) {
-                Toast.makeText(this, "Please enter both address and address name", Toast.LENGTH_SHORT).show()
+            if (address.isEmpty() || addressName.isEmpty() || selectedSuburb.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields and select a suburb", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Generate Google Maps link from the address (formatted for Google Maps URL)
-            val googleMapsLink = "https://www.google.com/maps/search/?api=1&query=" + address.replace(" ", "+")
-
-            // Create location object with address, address name, and Google Maps link
-            val locationData = LocationDC(address, addressName, googleMapsLink)
+            // Create a location object with address, address name, and suburb
+            val locationData = LocationDC(address, addressName, selectedSuburb)
 
             // Generate a unique ID for the location
             val locationId = FirebaseDatabase.getInstance().getReference("locations").push().key
             if (locationId != null) {
                 // Save the location data to Firebase
                 FirebaseDatabase.getInstance().getReference("locations").child(locationId).setValue(locationData)
-                    // On successful save, show success message, clear input fields, and dismiss dialog
                     .addOnSuccessListener {
+                        // On success, show success message, clear input fields, and dismiss dialog
                         Toast.makeText(this, "Location saved successfully!", Toast.LENGTH_SHORT).show()
                         addressEditText.text.clear()
                         addressNameEditText.text.clear()
                         dialog.dismiss()  // Close the dialog
                     }
-                    // On failure, show error message
                     .addOnFailureListener { e ->
+                        // On failure, show error message
                         Toast.makeText(this, "Error saving location: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             } else {
@@ -333,6 +362,6 @@ class Admin_Dashboard : AppCompatActivity() {
     data class LocationDC(
         val address: String? = "",  // Address of the location
         val addressName: String? = "",  // Name of the location
-        val googleMapsLink: String? = ""  // Google Maps link to the location
+        val suburb: String
     )
 }

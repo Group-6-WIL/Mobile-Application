@@ -1,6 +1,7 @@
 package com.ali.the_ladybird_foundation
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -25,7 +26,7 @@ class Contact_Us : AppCompatActivity() {
     private lateinit var locationBtn : ImageView
     private lateinit var eventsBtn : ImageView
     private lateinit var contactUs : ImageView
-    private lateinit var loginOutBtn : ImageView
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,7 @@ class Contact_Us : AppCompatActivity() {
         donateBtn = findViewById(R.id.contact_donationImg)
         locationBtn = findViewById(R.id.contact_locationImg)
         eventsBtn = findViewById(R.id.contact_eventsImg)
-        loginOutBtn = findViewById(R.id.contact_loginoutImg)
+
 
         contactUs = findViewById(R.id.contact_contactImg)
 
@@ -81,42 +82,11 @@ class Contact_Us : AppCompatActivity() {
         }
 
 
-        loginOutBtn.setOnClickListener {
-            showLoginLogoutDialog()
-        }
+
     }
-    private fun showLoginLogoutDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
-        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
-        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
-
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle("Login/Logout")
-        builder.setView(dialogView)
-
-        val alertDialog = builder.create()
-
-        btnConfirm.setOnClickListener {
-            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            when (selectedRadioButtonId) {
-                R.id.radioLogin -> {
-                    // Navigate to Login Activity
-                    val intentLogin = Intent(this, Login::class.java)
-                    startActivity(intentLogin)
-                }
-                R.id.radioLogout -> {
-                    // Log out the user
-                    FirebaseAuth.getInstance().signOut()
-                    // Redirect to Home or Login activity
-                    Toast.makeText(this, "You have been Succussfully logged out", Toast.LENGTH_SHORT).show()
-                    val intentHome = Intent(this, Home::class.java)
-                    startActivity(intentHome)
-                }
-            }
-            alertDialog.dismiss()
-        }
-
-        alertDialog.show()
+    fun openPopiaWebsite(view: android.view.View) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://popia.co.za/"))
+        startActivity(browserIntent)
     }
     // Method to load contacts from Firebase
     private fun loadContacts() {

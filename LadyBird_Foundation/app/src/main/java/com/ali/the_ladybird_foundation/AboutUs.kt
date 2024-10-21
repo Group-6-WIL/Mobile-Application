@@ -1,6 +1,7 @@
 package com.ali.the_ladybird_foundation
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -37,7 +38,6 @@ class AboutUs : AppCompatActivity() {
     private lateinit var donateBtn : ImageView
     private lateinit var locationBtn : ImageView
     private lateinit var eventsBtn : ImageView
-    private lateinit var loginOutBtn : ImageView
     private lateinit var adminLogin : ImageView
     private lateinit var contactBtn : ImageView
 
@@ -64,12 +64,11 @@ class AboutUs : AppCompatActivity() {
         donateBtn = findViewById(R.id.about_donationImg)
         locationBtn = findViewById(R.id.about_locationImg)
         eventsBtn = findViewById(R.id.about_eventsImg)
-        loginOutBtn = findViewById(R.id.about_loginoutImg)
         adminLogin = findViewById(R.id.about_adminDashboard)
         contactBtn = findViewById(R.id.about_contactImg2)
 
-        aboutUsTextView = findViewById(R.id.textView10) // Your About Us TextView
-        missionTextView = findViewById(R.id.textView12)
+        aboutUsTextView = findViewById(R.id.textView5) // Your About Us TextView
+        missionTextView = findViewById(R.id.textView6)
 
         homeBtn.setOnClickListener {
             val intentHome = Intent(this, Home::class.java)
@@ -105,12 +104,6 @@ class AboutUs : AppCompatActivity() {
         }
 
 
-        loginOutBtn.setOnClickListener {
-            showLoginLogoutDialog()
-        }
-
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.about_root_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -127,6 +120,12 @@ class AboutUs : AppCompatActivity() {
         fetchDataFromFirebase()
 
     }
+
+    fun openPopiaWebsite(view: android.view.View) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://popia.co.za/"))
+        startActivity(browserIntent)
+    }
+
 
     // New method to show the password prompt dialog
     private fun showAdminPasswordDialog() {
@@ -166,8 +165,8 @@ class AboutUs : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.d("FirebaseSnapshot", snapshot.value.toString()) // Log the entire snapshot
                 if (snapshot.exists()) {
-                    val aboutUsContent = snapshot.child("content").value?.toString() ?: "No content available"
-                    val missionContent = snapshot.child("mission").value?.toString() ?: "No mission statement available"
+                    val aboutUsContent = snapshot.child("Content").value?.toString() ?: "No content available"
+                    val missionContent = snapshot.child("Mission").value?.toString() ?: "No mission statement available"
 
                     aboutUsTextView.text = aboutUsContent
                     missionTextView.text = missionContent
@@ -198,37 +197,4 @@ class AboutUs : AppCompatActivity() {
         handler.removeCallbacks(runnable) // Clean up the handler when the activity is destroyed
     }
 
-    private fun showLoginLogoutDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
-        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
-        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Login/Logout")
-        builder.setView(dialogView)
-
-        val alertDialog = builder.create()
-
-        btnConfirm.setOnClickListener {
-            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            when (selectedRadioButtonId) {
-                R.id.radioLogin -> {
-                    // Navigate to Login Activity
-                    val intentLogin = Intent(this, Login::class.java)
-                    startActivity(intentLogin)
-                }
-                R.id.radioLogout -> {
-                    // Log out the user
-                    FirebaseAuth.getInstance().signOut()
-                    // Redirect to Home or Login activity
-                    Toast.makeText(this, "You have been Succussfully logged out", Toast.LENGTH_SHORT).show()
-                    val intentHome = Intent(this, Home::class.java)
-                    startActivity(intentHome)
-                }
-            }
-            alertDialog.dismiss()
-        }
-
-        alertDialog.show()
-    }
 }

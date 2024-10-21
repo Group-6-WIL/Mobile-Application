@@ -2,6 +2,7 @@ package com.ali.the_ladybird_foundation
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,7 +34,6 @@ class Events : AppCompatActivity() {
     private lateinit var donation : ImageView
     private lateinit var location : ImageView
     private lateinit var events : ImageView
-    private lateinit var logout : ImageView
     private lateinit var ladybirdIcon: ImageView
     private lateinit var contactBtn : ImageView
 
@@ -49,7 +49,6 @@ class Events : AppCompatActivity() {
         donation = findViewById(R.id.events_donationImg)
         location = findViewById(R.id.events_locationImg)
         events = findViewById(R.id.events_eventsImg)
-        logout = findViewById(R.id.events_loginoutImg)
         ladybirdIcon = findViewById(R.id.events_adminDashboard)
         contactBtn = findViewById(R.id.event_contactImg4)
 
@@ -80,16 +79,17 @@ class Events : AppCompatActivity() {
             startActivity(intentEvent)
         }
 
-        logout.setOnClickListener {
-            showLoginLogoutDialog()
-        }
-
         // Inside your onCreate method
         ladybirdIcon.setOnClickListener {
             showAdminPasswordDialog()
         }
 
 
+    }
+
+    fun openPopiaWebsite(view: android.view.View) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://popia.co.za/"))
+        startActivity(browserIntent)
     }
 
     // New method to show the password prompt dialog
@@ -138,13 +138,10 @@ class Events : AppCompatActivity() {
                     }
                 }
 
-                // Debugging: Print all fetched events
-                println("Fetched Events: $allEvents")
+                // Sort events by date
+                allEvents.sortBy { it.date }
 
-                // Sort events by date before displaying
-                allEvents.sortBy { it.date }  // Ensure the date is in the format "DD-MM-YYYY"
-
-                // Display all events initially
+                // Display all events
                 displayEvents(allEvents)
             }
 
@@ -234,44 +231,4 @@ data class Event(
     val date: String = "", // Ensure this matches the format used in showDatePicker()
     val imageUrl: String? = null // Include this if you plan to display images in the future
 )
-
-
-
-
-    private fun showLoginLogoutDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_login_logout, null)
-        val radioGroup: RadioGroup = dialogView.findViewById(R.id.radioGroup)
-        val btnConfirm: Button = dialogView.findViewById(R.id.btnConfirm)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Login/Logout")
-        builder.setView(dialogView)
-
-        val alertDialog = builder.create()
-
-        btnConfirm.setOnClickListener {
-            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            when (selectedRadioButtonId) {
-                R.id.radioLogin -> {
-                    // Navigate to Login Activity
-                    val intentLogin = Intent(this, Login::class.java)
-                    startActivity(intentLogin)
-                }
-                R.id.radioLogout -> {
-                    // Log out the user
-                    FirebaseAuth.getInstance().signOut()
-                    // Redirect to Home or Login activity
-                    Toast.makeText(this, "You have been Succussfully logged out", Toast.LENGTH_SHORT).show()
-                    val intentHome = Intent(this, Home::class.java)
-                    startActivity(intentHome)
-                }
-            }
-            alertDialog.dismiss()
-        }
-
-        alertDialog.show()
     }
-
-
-
-}
