@@ -102,11 +102,9 @@ class Admin_Dashboard : AppCompatActivity() {
     }
 
     private fun AddContact() {
-        // Setting the layout for the contact details dialog (popup window)
         dialog.setContentView(R.layout.admin_contact)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // Finding the required UI elements within the dialog
         val name = dialog.findViewById<EditText>(R.id.editTextName)
         val number = dialog.findViewById<EditText>(R.id.editTextNumber)
         val email = dialog.findViewById<EditText>(R.id.editTextEmail)
@@ -114,26 +112,22 @@ class Admin_Dashboard : AppCompatActivity() {
         val selectImage = dialog.findViewById<Button>(R.id.buttonUploadImage)
         val save = dialog.findViewById<Button>(R.id.buttonSave)
 
-        dialog.show() // Display the dialog
+        dialog.show()
 
-        // Set an OnClickListener to open image picker
         selectImage.setOnClickListener {
-            openImagePicker() // Open image picker to choose an image
+            openImagePicker()
         }
 
-        // Set an OnClickListener for the Save button
         save.setOnClickListener {
-            // Retrieve user input
             val contactName = name.text.toString()
             val contactNumber = number.text.toString()
             val contactEmail = email.text.toString()
 
-            // Validate the input (ensure no field is empty)
             if (contactName.isNotEmpty() && contactNumber.isNotEmpty() && contactEmail.isNotEmpty()) {
                 if (selectedImageUri != null) {
-                    uploadImageAndSaveContact(contactName, contactNumber, contactEmail) // Upload the image first
+                    uploadImageAndSaveContact(contactName, contactNumber, contactEmail)
                 } else {
-                    saveContactToDatabase(contactName, contactNumber, contactEmail, null) // No image selected
+                    saveContactToDatabase(contactName, contactNumber, contactEmail, null)
                 }
             } else {
                 Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show()
@@ -141,30 +135,27 @@ class Admin_Dashboard : AppCompatActivity() {
         }
     }
 
-    // Method to open the image picker
     private fun openImagePicker() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE_IMAGE_PICK)
     }
 
-    // Handle result from image picker
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_IMAGE_PICK && resultCode == Activity.RESULT_OK) {
-            selectedImageUri = data?.data // Get the image URI
-            dialog.findViewById<ImageView>(R.id.adminC_image).setImageURI(selectedImageUri) // Display image
+            selectedImageUri = data?.data
+            dialog.findViewById<ImageView>(R.id.adminC_image).setImageURI(selectedImageUri)
         }
     }
 
-    // Upload image to Firebase Storage and then save contact to Realtime Database
     private fun uploadImageAndSaveContact(name: String, number: String, email: String) {
         val storageRef = FirebaseStorage.getInstance().reference.child("contact_images/${UUID.randomUUID()}.jpg")
         selectedImageUri?.let { uri ->
             storageRef.putFile(uri)
                 .addOnSuccessListener { taskSnapshot ->
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
-                        saveContactToDatabase(name, number, email, uri.toString()) // Save contact with image URL
+                        saveContactToDatabase(name, number, email, uri.toString())
                     }
                 }
                 .addOnFailureListener {
@@ -173,7 +164,6 @@ class Admin_Dashboard : AppCompatActivity() {
         }
     }
 
-    // Save contact details to Firebase Realtime Database
     private fun saveContactToDatabase(name: String, number: String, email: String, imageUrl: String?) {
         val contactId = FirebaseDatabase.getInstance().getReference("contacts").push().key
         val contact = Contact(contactId, name, number, email, imageUrl)
@@ -183,7 +173,7 @@ class Admin_Dashboard : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Contact saved successfully!", Toast.LENGTH_SHORT).show()
-                        dialog.dismiss() // Close the dialog after saving
+                        dialog.dismiss()
                     } else {
                         Toast.makeText(this, "Failed to save contact: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }

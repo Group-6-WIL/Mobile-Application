@@ -8,6 +8,20 @@
     android:background="@drawable/home">
 
     <ImageView
+        android:id="@+id/contact_adminDashboard2"
+        android:layout_width="411dp"
+        android:layout_height="157dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/willladybughome"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
         android:id="@+id/popiact"
         android:layout_width="95dp"
         android:layout_height="93dp"
@@ -16,20 +30,21 @@
         android:onClick="openPopiaWebsite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.611"
         app:layout_constraintStart_toEndOf="@+id/contact_contactImg"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.583"
         app:srcCompat="@drawable/popi" />
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="393dp"
-        android:layout_height="642dp"
+        android:layout_width="397dp"
+        android:layout_height="422dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179">
+        app:layout_constraintVertical_bias="0.805">
 
         <LinearLayout
             android:id="@+id/events_container"
@@ -120,11 +135,13 @@
         android:id="@+id/divider2"
         android:layout_width="409dp"
         android:layout_height="1dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="60dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

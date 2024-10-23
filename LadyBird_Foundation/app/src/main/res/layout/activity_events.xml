@@ -36,8 +36,8 @@
 
     <ImageView
         android:id="@+id/events_adminDashboard"
-        android:layout_width="70dp"
-        android:layout_height="59dp"
+        android:layout_width="411dp"
+        android:layout_height="136dp"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,14 +126,14 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="393dp"
-        android:layout_height="642dp"
+        android:layout_width="392dp"
+        android:layout_height="476dp"
         app:layout_constraintBottom_toBottomOf="@+id/events_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.776">
+        app:layout_constraintVertical_bias="0.833">
 
         <LinearLayout
             android:id="@+id/events_container"

@@ -4,11 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +28,7 @@ class Contact_Us : AppCompatActivity() {
     private lateinit var locationBtn : ImageView
     private lateinit var eventsBtn : ImageView
     private lateinit var contactUs : ImageView
+    private lateinit var admindashboard: ImageView
 
 
 
@@ -44,6 +47,7 @@ class Contact_Us : AppCompatActivity() {
         donateBtn = findViewById(R.id.contact_donationImg)
         locationBtn = findViewById(R.id.contact_locationImg)
         eventsBtn = findViewById(R.id.contact_eventsImg)
+        admindashboard = findViewById(R.id.contact_adminDashboard2)
 
 
         contactUs = findViewById(R.id.contact_contactImg)
@@ -80,9 +84,45 @@ class Contact_Us : AppCompatActivity() {
             val intentcontacts = Intent(this, Contact_Us::class.java)
             startActivity(intentcontacts)
         }
+        admindashboard.setOnClickListener {
+            showAdminPasswordDialog()
+        }
 
 
 
+    }
+
+    // New method to show the password prompt dialog
+    private fun showAdminPasswordDialog() {
+        // Inflate the custom dialog layout
+        val dialogView = layoutInflater.inflate(R.layout.admin_password, null)
+
+        val passwordField = dialogView.findViewById<EditText>(R.id.adminPassword)
+        val enterButton = dialogView.findViewById<Button>(R.id.admin_add_events_uploadIV)
+
+        // Create an AlertDialog with the custom layout
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        enterButton.setOnClickListener {
+            val enteredPassword = passwordField.text.toString()
+
+            // Check if the entered password is correct
+            if (enteredPassword == "TheLadyB1rdF0undation") {  // Replace with your desired password
+                Toast.makeText(this, "Access Granted", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+
+                // Navigate to Admin Dashboard
+                val intentAdmin = Intent(this, Admin_Dashboard::class.java)
+                startActivity(intentAdmin)
+            } else {
+                Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Show the dialog
+        dialog.show()
     }
     fun openPopiaWebsite(view: android.view.View) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://popia.co.za/"))
