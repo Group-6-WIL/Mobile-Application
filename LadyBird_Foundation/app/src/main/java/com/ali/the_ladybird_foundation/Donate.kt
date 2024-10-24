@@ -208,7 +208,7 @@ class Donate : AppCompatActivity() {
 
         val emailIntent = Intent(Intent.ACTION_SEND).apply {
             type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("reesalison1@gmail.com")) // Update to the intended recipient
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("shelby@polka.co.za")) // Update to the intended recipient
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(Intent.EXTRA_TEXT, body)
         }
