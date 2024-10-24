@@ -3,18 +3,21 @@ package com.ali.the_ladybird_foundation
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -257,6 +260,7 @@ class admin_events : AppCompatActivity() {
 
 
     // Show date picker dialog when the date field is clicked
+// Show date picker dialog when the date field is clicked
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -265,20 +269,55 @@ class admin_events : AppCompatActivity() {
 
         val datePickerDialog = DatePickerDialog(
             this,
-            R.style.CustomDatePickerTheme,
             { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(selectedYear, selectedMonth, selectedDay)
 
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val dateString = dateFormat.format(selectedDate.time)
-                dateEditText.setText(dateString)
+                dateEditText.setText(dateFormat.format(selectedDate.time))
             },
             year, month, day
         )
 
+        // Apply maroon color to the header text
+        datePickerDialog.setOnShowListener {
+            // Set the header text (date) to maroon
+            val headerText = datePickerDialog.findViewById<TextView>(
+                resources.getIdentifier("android:id/date_picker_header_date", null, null)
+            )
+            headerText?.setTextColor(Color.parseColor("#800000")) // Maroon color
+
+            // Apply black text to the DatePicker dialog's day, month, and year pickers
+            val dayPicker = datePickerDialog.findViewById<View>(
+                resources.getIdentifier("android:id/day", null, null)
+            )
+            val monthPicker = datePickerDialog.findViewById<View>(
+                resources.getIdentifier("android:id/month", null, null)
+            )
+            val yearPicker = datePickerDialog.findViewById<View>(
+                resources.getIdentifier("android:id/year", null, null)
+            )
+
+            listOf(dayPicker, monthPicker, yearPicker).forEach { picker ->
+                (picker as? View)?.let { applyBlackTextColor(it) }
+            }
+        }
+
         datePickerDialog.show()
     }
+
+    // Helper function to apply black text color to all child TextViews within a View
+    private fun applyBlackTextColor(view: View) {
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                applyBlackTextColor(view.getChildAt(i))
+            }
+        } else if (view is TextView) {
+            view.setTextColor(resources.getColor(android.R.color.black, theme))
+        }
+    }
+
+
 
     // Upload the image to Firebase storage and save event data to Firebase database
     private fun uploadImageToFirebase(
@@ -333,26 +372,6 @@ class admin_events : AppCompatActivity() {
     }
 
 
-
-
-    // Save event information to Firebase database
-  /*  private fun saveEventToDatabase(eventName: String, description: String, date: String, imageUrl: String?) {
-        val databaseRef = FirebaseDatabase.getInstance().getReference("events")
-        val eventId = databaseRef.push().key
-
-        val event = Event(eventId, eventName, description, date, imageUrl)
-
-        eventId?.let {
-            databaseRef.child(it).setValue(event).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Toast.makeText(this, "Event added successfully", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
-                } else {
-                    Toast.makeText(this, "Failed to add event", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }*/
 
     // Handle result of image selection and display the selected image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
