@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,52 +10,130 @@
     android:background="@drawable/home">
 
     <ImageView
-        android:id="@+id/popiact"
-        android:layout_width="95dp"
-        android:layout_height="93dp"
-        android:autoLink="web"
-        android:linksClickable="true"
-        android:onClick="openPopiaWebsite"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.944"
-        app:layout_constraintStart_toEndOf="@+id/home_contactImg"
-        app:layout_constraintTop_toTopOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.28"
-        app:srcCompat="@drawable/popi" />
-
-    <TextView
-        android:id="@+id/home_TV2"
-        android:layout_width="371dp"
-        android:layout_height="116dp"
-        android:gravity="center"
-        android:text="@string/raising_funds_and_donating_to_others_who_are_in_need_this_will_have_all_the_information_about_our_website_and_what_we_are_after_right_now_just_filling_in_the_void"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/home_adminDashboard"
+        android:layout_width="412dp"
+        android:layout_height="149dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toTopOf="@+id/galleryScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831"
-        tools:ignore="TextSizeCheck,VisualLintOverlap" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/willladybughome"
+        tools:ignore="ImageContrastCheck" />
 
-    <TextView
-        android:id="@+id/home_TV1"
-        android:layout_width="382dp"
-        android:layout_height="246dp"
-        android:gravity="center"
-        android:text="@string/the_ladybird_foundation_was_set_up_to_provide_joy_and_relief_to_terminally_critically_or_seriously_ill_children_based_in_the_maltese_islands_funds_collected_will_be_used_to_give_these_children_and_their_families_the_opportunity_sometimes_the_last_opportunity_to_go_on_vacation_together_or_otherwise_spend_quality_time_with_each_other_we_will_try_to_give_children_the_chance_to_turn_their_dreams_into_reality"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!-- ScrollView for the image gallery -->
+    <ScrollView
+        android:id="@+id/galleryScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/home_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334"
-        tools:ignore="TextSizeCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/home_adminDashboard">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="2"
+            android:columnCount="3"
+            android:padding="16dp">
+
+            <!-- Image items for the gallery -->
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/img5" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/newimage2" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight="1"
+                app:srcCompat="@drawable/newimage3" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/newimage4" />
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/newimage5" />
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/newimage" />
+
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/galery" />
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/page" />
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/the" />
+            <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"
+            app:layout_columnWeight=""
+            app:srcCompat="@drawable/newimage7" />
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/newimage8" />
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:layout_columnWeight=""
+                app:srcCompat="@drawable/newimage9" />
+
+
+
+        </GridLayout>
+    </ScrollView>
 
     <View
         android:id="@+id/home_divider"
@@ -63,65 +142,12 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_TV2"
-        app:layout_constraintVertical_bias="0.373" />
+        app:layout_constraintTop_toBottomOf="@+id/home_adminDashboard"
+        app:layout_constraintVertical_bias="0.903" />
 
-    <ImageView
-        android:id="@+id/home_adminDashboard"
-        android:layout_width="412dp"
-        android:layout_height="149dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.005"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/willladybughome"
-        tools:ignore="ImageContrastCheck" />
-
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="120dp"
-        android:layout_height="112dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.617"
-        app:srcCompat="@drawable/img5" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="120dp"
-        android:layout_height="112dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.617"
-        app:srcCompat="@drawable/img4" />
-
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="120dp"
-        android:layout_height="112dp"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toTopOf="@+id/home_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.693"
-        app:srcCompat="@drawable/img6" />
-
+    <!-- Add your other ImageView elements here for bottom navigation bar -->
     <ImageView
         android:id="@+id/home_contactImg"
         android:layout_width="30dp"
@@ -198,6 +224,5 @@
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
         app:layout_constraintVertical_bias="0.594"
         app:srcCompat="@drawable/baseline_share_location_24" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

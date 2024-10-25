@@ -19,7 +19,8 @@
         app:layout_constraintStart_toEndOf="@+id/about_eventsImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.896"
-        app:srcCompat="@drawable/baseline_phone_24" />
+        app:srcCompat="@drawable/baseline_phone_24"
+        android:contentDescription="@string/todo" />
 
     <ImageView
         android:id="@+id/about_adminDashboard"
@@ -51,7 +52,7 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Us"
+        android:text="@string/about_us"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -68,13 +69,14 @@
         android:layout_height="wrap_content"
         android:text="Our Mission"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.613" />
+        app:layout_constraintVertical_bias="0.613"
+        tools:ignore="HardcodedText,TextSizeCheck" />
 
     <ImageView
         android:id="@+id/about_homeImg"
@@ -150,7 +152,8 @@
         app:layout_constraintStart_toEndOf="@+id/about_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/about_divider"
         app:layout_constraintVertical_bias="0.577"
-        app:srcCompat="@drawable/baseline_share_location_24" />
+        app:srcCompat="@drawable/baseline_share_location_24"
+        android:importantForAccessibility="no" />
 
     <ImageView
         android:id="@+id/popiact"
@@ -165,7 +168,9 @@
         android:autoLink="web"
         android:linksClickable="true"
         android:onClick="openPopiaWebsite"
-        app:srcCompat="@drawable/popi" />
+        app:srcCompat="@drawable/popi"
+        android:importantForAccessibility="no"
+        tools:ignore="VisualLintBounds" />
 
     <ScrollView
         android:id="@+id/aboutUsScroll"

@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,6 +35,8 @@ class Location : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         Configuration.getInstance().load(
             applicationContext,
             PreferenceManager.getDefaultSharedPreferences(applicationContext)
@@ -50,16 +53,30 @@ class Location : AppCompatActivity() {
 
         // Set up Spinner listener
         suburbSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val selectedSuburb = parent.getItemAtPosition(position) as String
-                fetchLocations(selectedSuburb)
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                // Check if the view is null before using it
+                if (view != null) {
+                    val selectedSuburb = parent.getItemAtPosition(position) as String
+                    fetchLocations(selectedSuburb)
+                } else {
+                    // Handle the case where the view is null
+                    Toast.makeText(this@Location, "Invalid selection", Toast.LENGTH_SHORT).show()
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Handle the case where nothing is selected if necessary
+                Toast.makeText(this@Location, "No suburb selected", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun fetchLocations(suburb: String) {
+        private fun fetchLocations(suburb: String) {
         database.child("locations")
             .orderByChild("suburb")
             .equalTo(suburb)

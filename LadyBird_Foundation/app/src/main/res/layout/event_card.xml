@@ -39,7 +39,7 @@
         <TextView
             android:id="@+id/viewDetails"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="View event details"
             android:gravity="center"
             android:textColorHint="#8F8E8E"/>

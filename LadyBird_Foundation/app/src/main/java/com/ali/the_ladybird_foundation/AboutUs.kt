@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -49,12 +50,21 @@ class AboutUs : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_about_us) // Corrected layout file
 
         val imageList = listOf(
             R.drawable.img1,
             R.drawable.img3,
-            R.drawable.img4
+            R.drawable.newimage,
+            R.drawable.newimage2,
+            R.drawable.newimage3,
+            R.drawable.newimage4,
+            R.drawable.newimage5,
+            R.drawable.newimage7,
+            R.drawable.newimage8,
+            R.drawable.newimage9
+
         )
 
         viewPager = findViewById(R.id.imageCarousel)

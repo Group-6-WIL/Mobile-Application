@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -44,6 +45,7 @@ class Donate : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_donate)
 
         // Initialize Firebase Auth
@@ -142,9 +144,12 @@ class Donate : AppCompatActivity() {
 
                 categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                        val selectedCategory = categories[position]
-                        setupItemSpinner(selectedCategory)
+                        if (position >= 0 && position < categories.size) {
+                            val selectedCategory = categories[position]
+                            setupItemSpinner(selectedCategory)
+                        }
                     }
+
 
                     override fun onNothingSelected(parent: AdapterView<*>) {}
                 }

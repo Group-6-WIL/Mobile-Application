@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Location"
-    android:background="@drawable/home">
+    android:background="@drawable/home"> <!-- Changed to white for better contrast -->
 
     <!-- Top Section with Icons -->
     <ImageView
         android:id="@+id/home_adminDashboard"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="173dp"
         android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,6 @@
         tools:ignore="ImageContrastCheck" />
 
     <!-- CardView to display all locations -->
-
     <ImageView
         android:id="@+id/location_homeImg"
         android:layout_width="30dp"
@@ -139,7 +138,6 @@
         android:layout_width="390dp"
         android:layout_height="380dp"
         android:layout_marginTop="24dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +149,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp" />
-    </ScrollView>
+            android:padding="16dp">
 
+
+
+            <!-- Add more TextViews as needed -->
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
