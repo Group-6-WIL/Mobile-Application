@@ -41,97 +41,100 @@
 
             <!-- Image items for the gallery -->
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight="1"
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/img5" />
 
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight="1"
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage2" />
 
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight="1"
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage3" />
 
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage4" />
+
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage5" />
+
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage" />
 
-
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/galery" />
+
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/page" />
+
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/the" />
+
             <ImageView
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_margin="8dp"
-            android:scaleType="centerCrop"
-            app:layout_columnWeight=""
-            app:srcCompat="@drawable/newimage7" />
-            <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
+                app:srcCompat="@drawable/newimage7" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage8" />
+
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="0dp"
                 android:layout_height="110dp"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:layout_columnWeight=""
+                android:layout_columnWeight="1"
                 app:srcCompat="@drawable/newimage9" />
-
-
-
         </GridLayout>
     </ScrollView>
 
@@ -148,6 +151,7 @@
         app:layout_constraintVertical_bias="0.903" />
 
     <!-- Add your other ImageView elements here for bottom navigation bar -->
+
     <ImageView
         android:id="@+id/home_contactImg"
         android:layout_width="30dp"
@@ -155,10 +159,10 @@
         android:layout_marginStart="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.532"
         app:layout_constraintStart_toEndOf="@+id/home_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.594"
+        app:layout_constraintVertical_bias="0.615"
         app:srcCompat="@drawable/baseline_phone_24" />
 
     <ImageView
@@ -181,10 +185,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
+        app:layout_constraintHorizontal_bias="0.149"
         app:layout_constraintStart_toEndOf="@+id/home_aboutUsImg"
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.594"
+        app:layout_constraintVertical_bias="0.615"
         app:srcCompat="@drawable/baseline_attach_money_24" />
 
     <ImageView
@@ -207,10 +211,10 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toEndOf="@+id/home_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.594"
+        app:layout_constraintVertical_bias="0.615"
         app:srcCompat="@drawable/baseline_event_24" />
 
     <ImageView
@@ -219,10 +223,9 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.207"
         app:layout_constraintStart_toEndOf="@+id/home_donationImg"
         app:layout_constraintTop_toBottomOf="@+id/home_divider"
-        app:layout_constraintVertical_bias="0.594"
+        app:layout_constraintVertical_bias="0.615"
         app:srcCompat="@drawable/baseline_share_location_24" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
