@@ -39,6 +39,7 @@ class Donate : AppCompatActivity() {
     private lateinit var eventsBtn: ImageView
     private lateinit var contactUs: ImageView
     private lateinit var adminLogin: ImageView
+    private lateinit var note : EditText
 
     private val categories = mutableListOf<String>()
     private val itemsMap = mutableMapOf<String, List<String>>() // Category to items mapping
@@ -58,6 +59,7 @@ class Donate : AppCompatActivity() {
         nameEditText = findViewById(R.id.editTextText4)
         emailEditText = findViewById(R.id.editTextTextEmailAddress)
         phoneEditText = findViewById(R.id.editTextPhone)
+        note = findViewById<EditText>(R.id.addanote)
         viewBankingButton = findViewById(R.id.button)
         sendDonationButton = findViewById(R.id.button2)
 
@@ -124,6 +126,8 @@ class Donate : AppCompatActivity() {
                 Bank: Investec
                 Branch Code: 580105
                 Account Type: Trust Account
+                
+                PLEASE SEND PROOF OF PAYMENT TO MICHELLE : +27 79 076 2234
                 """.trimIndent()
             )
             .setPositiveButton("OK", null)
@@ -189,17 +193,18 @@ class Donate : AppCompatActivity() {
         val name = nameEditText.text.toString()
         val email = emailEditText.text.toString()
         val phone = phoneEditText.text.toString()
+        val note = note.text.toString()
         val selectedCategory = categorySpinner.selectedItem?.toString() ?: ""
         val selectedItem = itemSpinner.selectedItem?.toString() ?: ""
 
-        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || selectedItem.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || selectedItem.isEmpty() || note.isEmpty()) {
             Toast.makeText(this, "Please fill in all details", Toast.LENGTH_SHORT).show()
         } else {
-            sendEmailIntent(name, email, phone, selectedCategory, selectedItem)
+            sendEmailIntent(name, email, phone, selectedCategory, selectedItem, note)
         }
     }
 
-    private fun sendEmailIntent(name: String, email: String, phone: String, category: String, item: String) {
+    private fun sendEmailIntent(name: String, email: String, phone: String, category: String, item: String, note: String) {
         val subject = "Donation Details"
         val body = """
         **Donation Details:**
@@ -209,6 +214,7 @@ class Donate : AppCompatActivity() {
         Phone: $phone
         Category: $category
         Item: $item
+        Note: $note
     """.trimIndent()
 
         val emailIntent = Intent(Intent.ACTION_SEND).apply {
