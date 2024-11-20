@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Location"
+    android:background="@drawable/home"> <!-- Changed to white for better contrast -->
+
+    <!-- Top Section with Icons -->
+    <ImageView
+        android:id="@+id/home_adminDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="173dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/willladybughome"
+        tools:ignore="ImageContrastCheck" />
+
+    <!-- CardView to display all locations -->
+    <ImageView
+        android:id="@+id/location_homeImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:layout_constraintVertical_bias="0.411"
+        app:srcCompat="@drawable/baseline_home_24" />
+
+    <ImageView
+        android:id="@+id/location_donationImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toEndOf="@+id/location_aboutUsImg"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:srcCompat="@drawable/baseline_attach_money_24" />
+
+    <ImageView
+        android:id="@+id/location_eventsImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.363"
+        app:layout_constraintStart_toEndOf="@+id/location_donationImg"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:srcCompat="@drawable/baseline_event_24" />
+
+    <ImageView
+        android:id="@+id/location_contactImg5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.31"
+        app:layout_constraintStart_toEndOf="@+id/location_eventsImg"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:srcCompat="@drawable/baseline_people_alt_24" />
+
+    <ImageView
+        android:id="@+id/location_aboutUsImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toEndOf="@+id/location_homeImg"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:srcCompat="@drawable/baseline_info_24" />
+
+    <View
+        android:id="@+id/location_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="304dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_adminDashboard"
+        app:layout_constraintVertical_bias="0.762" />
+
+    <ImageView
+        android:id="@+id/location_locationImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/location_eventsImg"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toEndOf="@+id/location_donationImg"
+        app:layout_constraintTop_toBottomOf="@+id/location_divider"
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/baseline_share_location_24" />
+
+    <ImageView
+        android:id="@+id/popiact"
+        android:layout_width="95dp"
+        android:layout_height="93dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:onClick="openPopiaWebsite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toEndOf="@+id/location_contactImg5"
+        app:layout_constraintTop_toTopOf="@+id/location_divider"
+        app:layout_constraintVertical_bias="0.428"
+        app:srcCompat="@drawable/popi" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:entries="@array/location_array"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_adminDashboard"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="390dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:layout_constraintVertical_bias="0.776">
+
+        <LinearLayout
+            android:id="@+id/location_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+
+            <!-- Add more TextViews as needed -->
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

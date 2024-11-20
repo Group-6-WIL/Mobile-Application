@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "605073358241",
+    "project_id": "ladybird-foundation",
+    "storage_bucket": "ladybird-foundation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605073358241:android:d8334c2ea287f57c215fe0",
+        "android_client_info": {
+          "package_name": "com.ali.the_ladybird_foundation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhdSWhIagEjD4DaqA5JGpSAHwoK_oIVBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
